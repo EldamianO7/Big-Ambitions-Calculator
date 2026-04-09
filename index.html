@@ -1,0 +1,1506 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Big Ambitions — Calculateur de Production</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #ffffff;
+        --bg-panel: #ffffff;
+        --bg-header: #ffffff;
+        --border: #e5e5e5;
+        --border-focus: #d4d4d4;
+        --accent: #171717;
+        --accent-hover: #262626;
+        --text: #171717;
+        --text-dim: #525252;
+        --text-dimmer: #a3a3a3;
+        --green: #15803d;
+        --red: #b91c1c;
+        --radius: 4px;
+        --radius-sm: 3px;
+        --shadow: none;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family:
+          "Inter",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+        font-size: 14px;
+      }
+
+      /* HEADER */
+      header {
+        border-bottom: 1px solid var(--border);
+        padding: 16px 32px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: var(--bg-header);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .logo-icon {
+        font-size: 18px;
+      }
+      .logo h1 {
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--text);
+        letter-spacing: -0.01em;
+      }
+      .logo span {
+        color: var(--text);
+      }
+      .header-sub {
+        font-size: 12px;
+        color: var(--text-dim);
+        font-family: inherit;
+      }
+
+      /* LAYOUT */
+      .app {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 32px 24px;
+        display: grid;
+        grid-template-columns: 1fr 320px;
+        gap: 32px;
+      }
+
+      /* PANELS */
+      .panel {
+        background: var(--bg-panel);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+      }
+      .panel-header {
+        padding: 14px 20px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #fafafa;
+      }
+      .panel-title {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--text);
+      }
+
+      /* BUTTONS */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 14px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border);
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 500;
+        transition:
+          background 0.15s,
+          border-color 0.15s;
+        font-family: inherit;
+      }
+      .btn-primary {
+        background: var(--accent);
+        color: #ffffff;
+        border-color: var(--accent);
+      }
+      .btn-primary:hover {
+        background: var(--accent-hover);
+        border-color: var(--accent-hover);
+      }
+      .btn-ghost {
+        background: #ffffff;
+        color: var(--text);
+        border: 1px solid var(--border);
+      }
+      .btn-ghost:hover {
+        background: #fafafa;
+      }
+      .btn-danger {
+        background: transparent;
+        color: var(--red);
+        border: 1px solid var(--border);
+      }
+      .btn-danger:hover {
+        background: #fef2f2;
+        border-color: #fecaca;
+      }
+      .btn-sm {
+        padding: 6px 12px;
+        font-size: 12px;
+      }
+
+      /* LINE CARD */
+      .lines-list {
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .empty-state {
+        text-align: center;
+        padding: 48px 20px;
+        color: var(--text-dim);
+      }
+      .empty-icon {
+        font-size: 24px;
+        margin-bottom: 8px;
+        opacity: 0.6;
+      }
+      .recap-empty {
+        color: var(--text-dimmer);
+        font-size: 13px;
+      }
+
+      /* AUTOCOMPLETE DROPDOWN */
+      .autocomplete-wrapper {
+        position: relative;
+        flex: 2;
+      }
+      .autocomplete-dropdown {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #ffffff;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        max-height: 150px;
+        overflow-y: auto;
+        z-index: 50;
+        display: none;
+      }
+      .autocomplete-dropdown.open {
+        display: block;
+      }
+      .autocomplete-item {
+        padding: 8px 10px;
+        font-size: 13px;
+        cursor: pointer;
+      }
+      .autocomplete-item:hover {
+        background: #f5f5f5;
+      }
+
+      /* HEADER ACTIONS */
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .lang-toggle {
+        display: flex;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        overflow: hidden;
+      }
+      .lang-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+        background: #ffffff;
+        border: none;
+        cursor: pointer;
+        font-family: inherit;
+      }
+      .lang-btn.active {
+        background: var(--accent);
+        color: #ffffff;
+      }
+      .lang-btn:not(.active):hover {
+        background: #f5f5f5;
+      }
+      .line-card {
+        background: #ffffff;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        transition: border-color 0.15s;
+      }
+      .line-card:hover {
+        border-color: var(--border-focus);
+      }
+      .line-card.expanded {
+        border-color: var(--text);
+      }
+      .line-card-header {
+        padding: 14px 16px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+      }
+      .line-card-name {
+        flex: 1;
+        font-size: 14px;
+        font-weight: 500;
+      }
+      .line-badge {
+        font-size: 12px;
+        padding: 3px 8px;
+        border-radius: var(--radius-sm);
+        background: #f5f5f5;
+        color: var(--text-dim);
+        font-weight: 500;
+      }
+      .line-badge.active {
+        background: #f0fdf4;
+        color: var(--green);
+      }
+      .chevron {
+        color: var(--text-dimmer);
+        font-size: 10px;
+      }
+
+      .line-card-body {
+        display: none;
+        border-top: 1px solid var(--border);
+        padding: 20px 16px;
+      }
+      .line-card.expanded .line-card-body {
+        display: block;
+      }
+
+      /* FORM ELEMENTS */
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        margin-bottom: 16px;
+      }
+      .form-group.full {
+        grid-column: 1 / -1;
+      }
+      label {
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--text-dim);
+        margin-bottom: 6px;
+        display: block;
+      }
+      input[type="text"],
+      input[type="number"] {
+        background: #ffffff;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        color: var(--text);
+        padding: 8px 10px;
+        font-size: 14px;
+        width: 100%;
+        outline: none;
+        font-family: inherit;
+      }
+      input:focus {
+        border-color: var(--text);
+      }
+
+      .section-label {
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--text);
+        margin: 20px 0 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .section-label::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+
+      /* RESOURCES */
+      .resource-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 6px;
+        padding: 2px 0;
+      }
+      .resource-row input[type="text"] {
+        flex: 2;
+        border-bottom: 1px solid var(--border);
+        border-top: 0;
+        border-left: 0;
+        border-right: 0;
+        border-radius: 0;
+        padding: 4px 0;
+      }
+      .resource-row input[type="number"] {
+        width: 70px;
+        border-bottom: 1px solid var(--border);
+        border-top: 0;
+        border-left: 0;
+        border-right: 0;
+        border-radius: 0;
+        padding: 4px 0;
+        text-align: right;
+      }
+      .res-sep,
+      .res-unit {
+        font-size: 12px;
+        color: var(--text-dimmer);
+      }
+      .btn-remove-res {
+        background: none;
+        border: none;
+        color: var(--text-dimmer);
+        cursor: pointer;
+        font-size: 12px;
+        padding: 2px 6px;
+      }
+      .btn-remove-res:hover {
+        color: var(--red);
+      }
+      .add-res-btn {
+        background: none;
+        border: 1px dashed var(--border);
+        color: var(--text-dim);
+        padding: 8px;
+        width: 100%;
+        cursor: pointer;
+        border-radius: var(--radius-sm);
+        font-size: 12px;
+        margin-top: 4px;
+        font-family: inherit;
+      }
+      .add-res-btn:hover {
+        border-color: var(--border-focus);
+        color: var(--text);
+      }
+      .card-actions {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
+      }
+
+      /* RESULTS */
+      .line-results {
+        margin-top: 20px;
+        background: #fafafa;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+      }
+      .line-results-title {
+        padding: 10px 14px;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--text-dim);
+        border-bottom: 1px solid var(--border);
+      }
+      .line-results-body {
+        padding: 14px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      .result-item {
+        display: flex;
+        justify-content: space-between;
+        font-size: 13px;
+        padding: 4px 0;
+        border-bottom: 1px solid #f0f0f0;
+      }
+      .result-block-title {
+        font-size: 11px;
+        font-weight: 500;
+        margin-bottom: 8px;
+        color: var(--text-dim);
+      }
+
+      /* RECAP SIDEBAR */
+      .recap-body {
+        padding: 16px;
+      }
+      .recap-stat {
+        display: flex;
+        justify-content: space-between;
+        padding: 6px 0;
+        border-bottom: 1px solid #f5f5f5;
+        font-size: 13px;
+      }
+      .recap-stat-name {
+        color: var(--text-dim);
+      }
+      .recap-stat-val {
+        font-weight: 500;
+        font-family: inherit;
+        font-variant-numeric: tabular-nums;
+      }
+      .recap-section-sep {
+        font-size: 11px;
+        font-weight: 500;
+        margin: 14px 0 6px;
+        color: var(--text-dim);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .recap-section-sep::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+
+      /* MODAL */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.3);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+      }
+      .modal-overlay.open {
+        display: flex;
+      }
+      .modal {
+        background: #ffffff;
+        border-radius: var(--radius);
+        padding: 24px;
+        width: 100%;
+        max-width: 380px;
+        border: 1px solid var(--border);
+      }
+      .modal h2 {
+        font-size: 16px;
+        font-weight: 500;
+        margin-bottom: 20px;
+      }
+
+      /* TOAST */
+      .toast {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        background: var(--text);
+        color: #ffffff;
+        padding: 10px 16px;
+        border-radius: var(--radius);
+        font-size: 13px;
+        opacity: 0;
+        transition: opacity 0.2s;
+        pointer-events: none;
+      }
+      .toast.show {
+        opacity: 1;
+      }
+
+      @media (max-width: 900px) {
+        .app {
+          grid-template-columns: 1fr;
+          padding: 16px 12px;
+          gap: 20px;
+        }
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+        header {
+          padding: 12px 16px;
+          flex-wrap: wrap;
+          gap: 12px;
+        }
+        .header-actions {
+          flex-wrap: wrap;
+          gap: 6px;
+        }
+        .header-sub {
+          display: none;
+        }
+        .btn {
+          font-size: 12px;
+          padding: 6px 10px;
+        }
+        .btn-sm {
+          padding: 5px 8px;
+          font-size: 11px;
+        }
+        .lines-list {
+          padding: 12px;
+        }
+        .line-card-body {
+          padding: 16px 12px;
+        }
+        .line-results-body {
+          grid-template-columns: 1fr;
+          padding: 12px;
+        }
+        .resource-row {
+          flex-wrap: wrap;
+          gap: 6px;
+        }
+        .autocomplete-wrapper {
+          flex: 1 1 100%;
+          min-width: 0;
+        }
+        .resource-row input[type="number"] {
+          width: 60px;
+        }
+        .card-actions {
+          flex-wrap: wrap;
+          gap: 8px;
+        }
+        .card-actions .btn {
+          flex: 1;
+          justify-content: center;
+        }
+        .modal {
+          max-width: 90%;
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <div class="logo-icon">🏭</div>
+        <div>
+          <h1>Big <span>Ambitions</span></h1>
+          <div class="header-sub" data-i18n="headerSub">
+            Calculateur de lignes de production
+          </div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div class="lang-toggle">
+          <button class="lang-btn" id="lang-fr" onclick="setLang('fr')">
+            FR
+          </button>
+          <button class="lang-btn" id="lang-en" onclick="setLang('en')">
+            EN
+          </button>
+        </div>
+        <button
+          class="btn btn-ghost btn-sm"
+          onclick="exportData()"
+          data-i18n="export"
+        >
+          Exporter
+        </button>
+        <button
+          class="btn btn-ghost btn-sm"
+          onclick="importData()"
+          data-i18n="import"
+        >
+          Importer
+        </button>
+        <button
+          class="btn btn-primary"
+          onclick="openNewLineModal()"
+          data-i18n="newLine"
+        >
+          + Nouvelle ligne
+        </button>
+      </div>
+    </header>
+    <input
+      type="file"
+      id="import-file"
+      accept=".json"
+      style="display: none"
+      onchange="handleImport(event)"
+    />
+
+    <div class="app">
+      <!-- MAIN -->
+      <div>
+        <div class="panel">
+          <div class="panel-header">
+            <span class="panel-title" data-i18n="productionLines"
+              >Lignes de production</span
+            >
+            <span class="header-sub" id="line-count">0 ligne(s)</span>
+          </div>
+          <div class="lines-list" id="lines-list">
+            <div class="empty-state">
+              <div class="empty-icon">📦</div>
+              <div>Aucune ligne de production.</div>
+              <div style="margin-top: 6px; font-size: 12px">
+                Crée ta première ligne pour commencer.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIDEBAR -->
+      <div class="sidebar">
+        <div class="panel">
+          <div class="panel-header">
+            <span class="panel-title" data-i18n="globalRecap"
+              >Recap global / semaine</span
+            >
+          </div>
+          <div id="recap-body" class="recap-body">
+            <div class="recap-empty" data-i18n="recapEmpty">
+              Les totaux apparaitront ici.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL Nouvelle ligne -->
+    <div class="modal-overlay" id="modal-new">
+      <div class="modal">
+        <h2 data-i18n="newLineTitle">Nouvelle ligne</h2>
+        <div class="form-group">
+          <label data-i18n="lineName">Nom de la ligne</label>
+          <input
+            type="text"
+            id="new-line-name"
+            data-i18n-placeholder="lineNamePlaceholder"
+          />
+        </div>
+        <div
+          class="modal-actions"
+          style="
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 20px;
+          "
+        >
+          <button
+            class="btn btn-ghost"
+            onclick="closeNewLineModal()"
+            data-i18n="cancel"
+          >
+            Annuler
+          </button>
+          <button
+            class="btn btn-primary"
+            onclick="createLine()"
+            data-i18n="create"
+          >
+            Creer
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+      // ============================================================
+      // I18N
+      // ============================================================
+      const LANG_KEY = "big_ambitions_lang";
+      const translations = {
+        fr: {
+          headerSub: "Calculateur de lignes de production",
+          export: "Exporter",
+          import: "Importer",
+          newLine: "+ Nouvelle ligne",
+          productionLines: "Lignes de production",
+          lineCount: (n) => `${n} ligne(s)`,
+          globalRecap: "Recap global / semaine",
+          recapEmpty: "Les totaux apparaitront ici.",
+          newLineTitle: "Nouvelle ligne",
+          lineName: "Nom de la ligne",
+          lineNamePlaceholder: "Ex: Usine de jus d'orange",
+          cancel: "Annuler",
+          create: "Creer",
+          noName: "Sans nom",
+          emptyTitle: "Aucune ligne de production.",
+          emptyDesc: "Cree ta premiere ligne pour commencer.",
+          daysPerWeek: "Jours de travail / semaine",
+          hoursPerWeek: "Heures de travail / semaine",
+          surplus: "Surplus souhaite (%)",
+          consumedPerHour: "Consomme par heure",
+          producedPerHour: "Produit par heure",
+          addConsumed: "+ Ajouter une ressource consommee",
+          addProduced: "+ Definir la ressource produite",
+          changeProduced: "Changer la ressource produite",
+          resultsPerWeek: "Resultats par semaine",
+          consumedWeek: "Consomme/semaine",
+          producedWeek: "Produit/semaine",
+          delete: "Supprimer",
+          duplicate: "Dupliquer",
+          save: "Sauvegarder",
+          lineSaved: "Ligne sauvegardee",
+          lineDeleted: "Ligne supprimee",
+          lineCreated: "Ligne creee",
+          deleteConfirm: "Supprimer cette ligne ?",
+          resourceName: "Nom ressource",
+          perHour: "/h",
+          consumed: "Consomme",
+          produced: "Produit",
+          exportSuccess: "Donnees exportees",
+          importSuccess: "Donnees importees",
+          importError: "Erreur lors de l'import",
+          daysPlaceholder: "Ex: 5",
+          hoursPlaceholder: "Ex: 40",
+          surplusPlaceholder: "Ex: 20",
+        },
+        en: {
+          headerSub: "Production Line Calculator",
+          export: "Export",
+          import: "Import",
+          newLine: "+ New Line",
+          productionLines: "Production Lines",
+          lineCount: (n) => `${n} line(s)`,
+          globalRecap: "Global Recap / Week",
+          recapEmpty: "Totals will appear here.",
+          newLineTitle: "New Line",
+          lineName: "Line Name",
+          lineNamePlaceholder: "Ex: Orange Juice Factory",
+          cancel: "Cancel",
+          create: "Create",
+          noName: "Unnamed",
+          emptyTitle: "No production lines.",
+          emptyDesc: "Create your first line to get started.",
+          daysPerWeek: "Working days / week",
+          hoursPerWeek: "Working hours / week",
+          surplus: "Desired surplus (%)",
+          consumedPerHour: "Consumed per hour",
+          producedPerHour: "Produced per hour",
+          addConsumed: "+ Add consumed resource",
+          addProduced: "+ Set produced resource",
+          changeProduced: "Change produced resource",
+          resultsPerWeek: "Results per week",
+          consumedWeek: "Consumed/week",
+          producedWeek: "Produced/week",
+          delete: "Delete",
+          duplicate: "Duplicate",
+          save: "Save",
+          lineSaved: "Line saved",
+          lineDeleted: "Line deleted",
+          lineCreated: "Line created",
+          deleteConfirm: "Delete this line?",
+          resourceName: "Resource name",
+          perHour: "/h",
+          consumed: "Consumed",
+          produced: "Produced",
+          exportSuccess: "Data exported",
+          importSuccess: "Data imported",
+          importError: "Import error",
+          daysPlaceholder: "Ex: 5",
+          hoursPlaceholder: "Ex: 40",
+          surplusPlaceholder: "Ex: 20",
+        },
+      };
+
+      let currentLang = localStorage.getItem(LANG_KEY) || "en";
+
+      function setLang(lang) {
+        currentLang = lang;
+        localStorage.setItem(LANG_KEY, lang);
+        updateLangButtons();
+        applyTranslations();
+        renderAll();
+      }
+
+      function updateLangButtons() {
+        document
+          .getElementById("lang-fr")
+          .classList.toggle("active", currentLang === "fr");
+        document
+          .getElementById("lang-en")
+          .classList.toggle("active", currentLang === "en");
+      }
+
+      function t(key) {
+        return translations[currentLang][key] || translations.fr[key] || key;
+      }
+
+      function applyTranslations() {
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          const key = el.dataset.i18n;
+          if (translations[currentLang][key]) {
+            el.textContent = translations[currentLang][key];
+          }
+        });
+        document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+          const key = el.dataset.i18nPlaceholder;
+          if (translations[currentLang][key]) {
+            el.placeholder = translations[currentLang][key];
+          }
+        });
+      }
+
+      // ============================================================
+      // STORE
+      // ============================================================
+      const STORAGE_KEY = "big_ambitions_lines_v2";
+
+      function loadLines() {
+        try {
+          return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        } catch {
+          return [];
+        }
+      }
+
+      function saveLines(lines) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(lines));
+      }
+
+      let lines = loadLines();
+      let expandedIds = new Set();
+
+      // ============================================================
+      // EXPORT / IMPORT
+      // ============================================================
+      function exportData() {
+        const data = JSON.stringify(lines, null, 2);
+        const blob = new Blob([data], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "big-ambitions-backup.json";
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast(t("exportSuccess"));
+      }
+
+      function importData() {
+        document.getElementById("import-file").click();
+      }
+
+      function handleImport(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          try {
+            const imported = JSON.parse(e.target.result);
+            if (Array.isArray(imported)) {
+              lines = imported;
+              saveLines(lines);
+              expandedIds.clear();
+              renderAll();
+              showToast(t("importSuccess"));
+            } else {
+              showToast(t("importError"));
+            }
+          } catch {
+            showToast(t("importError"));
+          }
+        };
+        reader.readAsText(file);
+        event.target.value = "";
+      }
+
+      // ============================================================
+      // RESOURCE AUTOCOMPLETE
+      // ============================================================
+      function getAllResourceNames() {
+        const names = new Set();
+        lines.forEach((line) => {
+          (line.consumes || []).forEach((r) => {
+            if (r.name && r.name.trim()) names.add(r.name.trim());
+          });
+          (line.produces || []).forEach((r) => {
+            if (r.name && r.name.trim()) names.add(r.name.trim());
+          });
+        });
+        return Array.from(names).sort();
+      }
+
+      // ============================================================
+      // UTILS
+      // ============================================================
+      function uid() {
+        return Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+      }
+
+      function showToast(msg) {
+        const t = document.getElementById("toast");
+        t.textContent = msg;
+        t.classList.add("show");
+        setTimeout(() => t.classList.remove("show"), 2200);
+      }
+
+      function calcLine(line) {
+        const hoursPerWeek = parseFloat(line.hoursPerWeek) || 0;
+        const surplus = parseFloat(line.surplus) || 0;
+        const mult = hoursPerWeek * (1 + surplus / 100);
+
+        const consumed = {}; // name -> qty/semaine
+        const produced = {};
+
+        (line.consumes || []).forEach((r) => {
+          if (r.name && r.qty) {
+            const normalizedName = r.name.trim().toLowerCase();
+            const displayName = r.name.trim();
+            if (!consumed[normalizedName]) {
+              consumed[normalizedName] = { display: displayName, qty: 0 };
+            }
+            consumed[normalizedName].qty += (parseInt(r.qty) || 0) * mult;
+          }
+        });
+        (line.produces || []).forEach((r) => {
+          if (r.name && r.qty) {
+            const normalizedName = r.name.trim().toLowerCase();
+            const displayName = r.name.trim();
+            if (!produced[normalizedName]) {
+              produced[normalizedName] = { display: displayName, qty: 0 };
+            }
+            produced[normalizedName].qty +=
+              (parseInt(r.qty) || 0) * hoursPerWeek;
+          }
+        });
+
+        return { consumed, produced, hoursPerWeek };
+      }
+
+      // ============================================================
+      // RECAP
+      // ============================================================
+      function updateRecap() {
+        const totalConsumed = {};
+        const totalProduced = {};
+
+        lines.forEach((line) => {
+          const { consumed, produced } = calcLine(line);
+          Object.entries(consumed).forEach(([key, data]) => {
+            if (!totalConsumed[key]) {
+              totalConsumed[key] = { display: data.display, qty: 0 };
+            }
+            totalConsumed[key].qty += data.qty;
+          });
+          Object.entries(produced).forEach(([key, data]) => {
+            if (!totalProduced[key]) {
+              totalProduced[key] = { display: data.display, qty: 0 };
+            }
+            totalProduced[key].qty += data.qty;
+          });
+        });
+
+        const container = document.getElementById("recap-body");
+        const hasData =
+          Object.keys(totalConsumed).length > 0 ||
+          Object.keys(totalProduced).length > 0;
+
+        if (!hasData) {
+          container.innerHTML = `<div class="recap-empty">${t("recapEmpty")}</div>`;
+          return;
+        }
+
+        let html = "";
+
+        if (Object.keys(totalConsumed).length > 0) {
+          html += `<div class="recap-section-sep consume">${t("consumed")}</div>`;
+          Object.entries(totalConsumed)
+            .sort((a, b) => a[1].display.localeCompare(b[1].display))
+            .forEach(([key, data]) => {
+              html += `<div class="recap-stat">
+        <span class="recap-stat-name">${escHtml(data.display)}</span>
+        <span class="recap-stat-val" style="color:var(--red)">${fmt(data.qty)}</span>
+      </div>`;
+            });
+        }
+
+        if (Object.keys(totalProduced).length > 0) {
+          html += `<div class="recap-section-sep produce" style="margin-top:16px">${t("produced")}</div>`;
+          Object.entries(totalProduced)
+            .sort((a, b) => a[1].display.localeCompare(b[1].display))
+            .forEach(([key, data]) => {
+              html += `<div class="recap-stat">
+        <span class="recap-stat-name">${escHtml(data.display)}</span>
+        <span class="recap-stat-val" style="color:var(--green)">${fmt(data.qty)}</span>
+      </div>`;
+            });
+        }
+
+        container.innerHTML = html;
+      }
+
+      function fmt(n) {
+        if (n >= 1000)
+          return n.toLocaleString("fr-FR", { maximumFractionDigits: 1 });
+        return n % 1 === 0 ? n.toString() : n.toFixed(2);
+      }
+
+      function escHtml(s) {
+        return s
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      // ============================================================
+      // RENDER
+      // ============================================================
+      function renderAll() {
+        const container = document.getElementById("lines-list");
+        document.getElementById("line-count").textContent = t("lineCount")(
+          lines.length,
+        );
+
+        if (lines.length === 0) {
+          container.innerHTML = `<div class="empty-state">
+      <div class="empty-icon">📦</div>
+      <div>${t("emptyTitle")}</div>
+      <div style="margin-top:6px;font-size:12px;">${t("emptyDesc")}</div>
+    </div>`;
+          updateRecap();
+          return;
+        }
+
+        container.innerHTML = lines
+          .map((line) => renderLineCard(line))
+          .join("");
+
+        // Rebind events
+        lines.forEach((line) => {
+          bindLineEvents(line.id);
+        });
+
+        updateRecap();
+      }
+
+      function renderLineCard(line) {
+        const isExpanded = expandedIds.has(line.id);
+        const { consumed, produced, hoursPerWeek } = calcLine(line);
+        const surplus = parseFloat(line.surplus) || 0;
+        const hasProducedResource = (line.produces || []).length > 0;
+
+        let resultsHtml = "";
+        if (
+          hoursPerWeek > 0 &&
+          (Object.keys(consumed).length > 0 || Object.keys(produced).length > 0)
+        ) {
+          resultsHtml = `<div class="line-results">
+      <div class="line-results-title">${t("resultsPerWeek")}</div>
+      <div class="line-results-body">
+        <div>
+          <div class="result-block-title consume">${t("consumedWeek")}</div>
+          ${
+            Object.keys(consumed).length > 0
+              ? Object.entries(consumed)
+                  .map(
+                    ([key, data]) => `
+              <div class="result-item">
+                <span class="result-item-name">${escHtml(data.display)}</span>
+                <span class="result-item-val consume">${fmt(data.qty)}${surplus > 0 ? `<span class="result-item-surplus">+${surplus}%</span>` : ""}</span>
+              </div>`,
+                  )
+                  .join("")
+              : '<div style="font-size:12px;color:var(--text-dimmer)">—</div>'
+          }
+        </div>
+        <div>
+          <div class="result-block-title produce">${t("producedWeek")}</div>
+          ${
+            Object.keys(produced).length > 0
+              ? Object.entries(produced)
+                  .map(
+                    ([key, data]) => `
+              <div class="result-item">
+                <span class="result-item-name">${escHtml(data.display)}</span>
+                <span class="result-item-val produce">${fmt(data.qty)}</span>
+              </div>`,
+                  )
+                  .join("")
+              : '<div style="font-size:12px;color:var(--text-dimmer)">—</div>'
+          }
+        </div>
+      </div>
+    </div>`;
+        }
+
+        return `
+  <div class="line-card ${isExpanded ? "expanded" : ""}" id="card-${line.id}">
+    <div class="line-card-header" onclick="toggleCard('${line.id}')">
+      <span class="line-card-name">${escHtml(line.name || t("noName"))}</span>
+      ${hoursPerWeek > 0 ? `<span class="line-badge active">${fmt(hoursPerWeek)}h/week</span>` : ""}
+      <span class="chevron">▼</span>
+    </div>
+    <div class="line-card-body">
+      <!-- Nom -->
+      <div class="form-row">
+        <div class="form-group full">
+          <label>${t("lineName")}</label>
+          <input type="text" data-field="name" value="${escHtml(line.name || "")}" placeholder="${t("lineNamePlaceholder")}">
+        </div>
+      </div>
+
+      <!-- Jours / Heures -->
+      <div class="form-row">
+        <div class="form-group">
+          <label>${t("daysPerWeek")}</label>
+          <input type="number" data-field="daysPerWeek" value="${line.daysPerWeek || ""}" min="0" max="7" step="1" placeholder="${t("daysPlaceholder")}">
+        </div>
+        <div class="form-group">
+          <label>${t("hoursPerWeek")}</label>
+          <input type="number" data-field="hoursPerWeek" value="${line.hoursPerWeek || ""}" min="0" step="0.5" placeholder="${t("hoursPlaceholder")}">
+          <div class="total-hours-info" id="hours-info-${line.id}"></div>
+        </div>
+      </div>
+
+      <!-- Surplus -->
+      <div class="form-row">
+        <div class="form-group">
+          <label>${t("surplus")}</label>
+          <input type="number" data-field="surplus" value="${line.surplus || ""}" min="0" step="1" placeholder="${t("surplusPlaceholder")}">
+        </div>
+      </div>
+
+      <!-- Consomme -->
+      <div class="section-label">${t("consumedPerHour")}</div>
+      <div class="resource-list" id="consumes-${line.id}">
+        ${renderResourceRows(line.consumes || [], "consumes", line.id)}
+      </div>
+      <button class="add-res-btn" onclick="addResource('${line.id}', 'consumes')">${t("addConsumed")}</button>
+
+      <!-- Produit -->
+      <div class="section-label">${t("producedPerHour")}</div>
+      <div class="resource-list" id="produces-${line.id}">
+        ${renderSingleProducedResource(line.produces || [], line.id)}
+      </div>
+      ${!hasProducedResource ? `<button class="add-res-btn" onclick="addResource('${line.id}', 'produces')">${t("addProduced")}</button>` : ""}
+
+      ${resultsHtml}
+
+      <div class="card-actions">
+        <button class="btn btn-danger" onclick="deleteLine('${line.id}')">${t("delete")}</button>
+        <button class="btn btn-ghost" onclick="duplicateLine('${line.id}')">${t("duplicate")}</button>
+        <button class="btn btn-primary btn-sm" onclick="saveLine('${line.id}')">${t("save")}</button>
+      </div>
+    </div>
+  </div>`;
+      }
+
+      function renderSingleProducedResource(resources, lineId) {
+        if (resources.length === 0) {
+          return '<div style="font-size:12px;color:var(--text-dimmer)">—</div>';
+        }
+        const r = resources[0];
+        return `
+    <div class="resource-row" data-index="0">
+      <div class="autocomplete-wrapper">
+        <input type="text" class="res-autocomplete" placeholder="${t("resourceName")}" value="${escHtml(r.name || "")}"
+          oninput="updateResource('${lineId}', 'produces', 0, 'name', this.value); showAutocomplete(this)"
+          onfocus="showAutocomplete(this)"
+          onblur="setTimeout(() => hideAutocomplete(this), 200)">
+        <div class="autocomplete-dropdown" id="autocomplete-produces-${lineId}-0"></div>
+      </div>
+      <span class="res-sep">x</span>
+      <input type="number" placeholder="0" value="${r.qty || ""}" min="0" step="1"
+        oninput="updateResource('${lineId}', 'produces', 0, 'qty', this.value)">
+      <span class="res-unit">${t("perHour")}</span>
+      <button class="btn-remove-res" onclick="removeResource('${lineId}', 'produces', 0)">x</button>
+    </div>`;
+      }
+
+      function renderResourceRows(resources, type, lineId) {
+        return resources
+          .map(
+            (r, i) => `
+    <div class="resource-row" data-index="${i}">
+      <div class="autocomplete-wrapper">
+        <input type="text" class="res-autocomplete" placeholder="${t("resourceName")}" value="${escHtml(r.name || "")}"
+          oninput="updateResource('${lineId}', '${type}', ${i}, 'name', this.value); showAutocomplete(this)"
+          onfocus="showAutocomplete(this)"
+          onblur="setTimeout(() => hideAutocomplete(this), 200)">
+        <div class="autocomplete-dropdown" id="autocomplete-${type}-${lineId}-${i}"></div>
+      </div>
+      <span class="res-sep">x</span>
+      <input type="number" placeholder="0" value="${r.qty || ""}" min="0" step="1"
+        oninput="updateResource('${lineId}', '${type}', ${i}, 'qty', this.value)">
+      <span class="res-unit">${t("perHour")}</span>
+      <button class="btn-remove-res" onclick="removeResource('${lineId}', '${type}', ${i})">x</button>
+    </div>`,
+          )
+          .join("");
+      }
+
+      // ============================================================
+      // AUTOCOMPLETE
+      // ============================================================
+      function showAutocomplete(input) {
+        const dropdown = input.parentElement.querySelector(
+          ".autocomplete-dropdown",
+        );
+        if (!dropdown) return;
+
+        const value = input.value.toLowerCase().trim();
+        const allNames = getAllResourceNames();
+        const filtered = value
+          ? allNames.filter((name) => name.toLowerCase().includes(value))
+          : allNames;
+
+        if (filtered.length === 0) {
+          dropdown.classList.remove("open");
+          return;
+        }
+
+        dropdown.innerHTML = filtered
+          .map(
+            (name) =>
+              `<div class="autocomplete-item" onmousedown="selectAutocomplete(this, '${escHtml(name)}')">${escHtml(name)}</div>`,
+          )
+          .join("");
+        dropdown.classList.add("open");
+      }
+
+      function hideAutocomplete(input) {
+        const dropdown = input.parentElement.querySelector(
+          ".autocomplete-dropdown",
+        );
+        if (dropdown) dropdown.classList.remove("open");
+      }
+
+      function selectAutocomplete(item, value) {
+        const wrapper = item.closest(".autocomplete-wrapper");
+        const input = wrapper.querySelector("input");
+        input.value = value;
+        input.dispatchEvent(new Event("input", { bubbles: true }));
+        hideAutocomplete(input);
+      }
+
+      function bindLineEvents(id) {
+        const card = document.getElementById(`card-${id}`);
+        if (!card) return;
+        card.querySelectorAll("input[data-field]").forEach((input) => {
+          input.addEventListener("input", () => {
+            const line = lines.find((l) => l.id === id);
+            if (line) {
+              line[input.dataset.field] = input.value;
+              refreshResults(id);
+            }
+          });
+        });
+      }
+
+      function refreshResults(id) {
+        // Re-render just results + badge without full render
+        const line = lines.find((l) => l.id === id);
+        if (!line) return;
+        const card = document.getElementById(`card-${id}`);
+        if (!card) return;
+
+        // Update badge
+        const { hoursPerWeek } = calcLine(line);
+        const badge = card.querySelector(".line-badge");
+        if (hoursPerWeek > 0) {
+          if (badge) {
+            badge.textContent = `${fmt(hoursPerWeek)}h/week`;
+            badge.className = "line-badge active";
+          } else {
+            const chevron = card.querySelector(".chevron");
+            const badgeEl = document.createElement("span");
+            badgeEl.className = "line-badge active";
+            badgeEl.textContent = `${fmt(hoursPerWeek)}h/week`;
+            card
+              .querySelector(".line-card-header")
+              .insertBefore(badgeEl, chevron);
+          }
+        }
+
+        updateRecap();
+      }
+
+      // ============================================================
+      // TOGGLE
+      // ============================================================
+      function toggleCard(id) {
+        if (expandedIds.has(id)) expandedIds.delete(id);
+        else expandedIds.add(id);
+        renderAll();
+        // Re-expand
+        if (expandedIds.has(id)) {
+          setTimeout(() => {
+            const card = document.getElementById(`card-${id}`);
+            if (card)
+              card.scrollIntoView({ behavior: "smooth", block: "nearest" });
+          }, 50);
+        }
+      }
+
+      // ============================================================
+      // RESOURCE MANAGEMENT
+      // ============================================================
+      function updateResource(lineId, type, index, field, value) {
+        const line = lines.find((l) => l.id === lineId);
+        if (!line) return;
+        if (!line[type]) line[type] = [];
+        if (!line[type][index]) line[type][index] = {};
+        line[type][index][field] = value;
+        refreshResults(lineId);
+      }
+
+      function addResource(lineId, type) {
+        const line = lines.find((l) => l.id === lineId);
+        if (!line) return;
+        if (!line[type]) line[type] = [];
+        // For produces, only allow 1 resource
+        if (type === "produces" && line[type].length >= 1) return;
+        line[type].push({ name: "", qty: "" });
+        // Re-render the card to update the button visibility for produces
+        if (type === "produces") {
+          renderAll();
+        } else {
+          const container = document.getElementById(`${type}-${lineId}`);
+          if (container) {
+            container.innerHTML = renderResourceRows(line[type], type, lineId);
+          }
+        }
+      }
+
+      function removeResource(lineId, type, index) {
+        const line = lines.find((l) => l.id === lineId);
+        if (!line || !line[type]) return;
+        line[type].splice(index, 1);
+        // Re-render the card to update the button visibility for produces
+        if (type === "produces") {
+          renderAll();
+        } else {
+          const container = document.getElementById(`${type}-${lineId}`);
+          if (container) {
+            container.innerHTML = renderResourceRows(line[type], type, lineId);
+          }
+          refreshResults(lineId);
+        }
+      }
+
+      // ============================================================
+      // CRUD
+      // ============================================================
+      function saveLine(id) {
+        const card = document.getElementById(`card-${id}`);
+        if (!card) return;
+        const line = lines.find((l) => l.id === id);
+        if (!line) return;
+        // Sync name from input
+        const nameInput = card.querySelector('input[data-field="name"]');
+        if (nameInput) line.name = nameInput.value;
+        saveLines(lines);
+        showToast(t("lineSaved"));
+        renderAll();
+        expandedIds.add(id);
+        renderAll();
+      }
+
+      function deleteLine(id) {
+        if (!confirm(t("deleteConfirm"))) return;
+        lines = lines.filter((l) => l.id !== id);
+        expandedIds.delete(id);
+        saveLines(lines);
+        renderAll();
+        showToast(t("lineDeleted"));
+      }
+
+      function duplicateLine(id) {
+        const original = lines.find((l) => l.id === id);
+        if (!original) return;
+
+        const duplicate = {
+          id: uid(),
+          name: original.name + " (copy)",
+          daysPerWeek: original.daysPerWeek,
+          hoursPerWeek: original.hoursPerWeek,
+          surplus: original.surplus,
+          consumes: JSON.parse(JSON.stringify(original.consumes || [])),
+          produces: JSON.parse(JSON.stringify(original.produces || [])),
+        };
+
+        lines.push(duplicate);
+        expandedIds.add(duplicate.id);
+        saveLines(lines);
+        renderAll();
+        showToast(t("lineCreated"));
+
+        setTimeout(() => {
+          const card = document.getElementById(`card-${duplicate.id}`);
+          if (card) card.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 100);
+      }
+
+      // ============================================================
+      // MODAL
+      // ============================================================
+      function openNewLineModal() {
+        document.getElementById("new-line-name").value = "";
+        document.getElementById("modal-new").classList.add("open");
+        setTimeout(() => document.getElementById("new-line-name").focus(), 50);
+      }
+
+      function closeNewLineModal() {
+        document.getElementById("modal-new").classList.remove("open");
+      }
+
+      function createLine() {
+        const name =
+          document.getElementById("new-line-name").value.trim() ||
+          t("newLineTitle");
+        const line = {
+          id: uid(),
+          name,
+          daysPerWeek: "",
+          hoursPerWeek: "",
+          surplus: "0",
+          consumes: [],
+          produces: [],
+        };
+        lines.push(line);
+        expandedIds.add(line.id);
+        saveLines(lines);
+        closeNewLineModal();
+        renderAll();
+        showToast(t("lineCreated"));
+        setTimeout(() => {
+          const card = document.getElementById(`card-${line.id}`);
+          if (card) card.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 100);
+      }
+
+      // Enter to confirm modal
+      document
+        .getElementById("new-line-name")
+        .addEventListener("keydown", (e) => {
+          if (e.key === "Enter") createLine();
+          if (e.key === "Escape") closeNewLineModal();
+        });
+
+      document.getElementById("modal-new").addEventListener("click", (e) => {
+        if (e.target === document.getElementById("modal-new"))
+          closeNewLineModal();
+      });
+
+      // ============================================================
+      // INIT
+      // ============================================================
+      updateLangButtons();
+      applyTranslations();
+      renderAll();
+    </script>
+  </body>
+</html>
