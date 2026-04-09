@@ -501,6 +501,43 @@
         margin-bottom: 20px;
       }
 
+      .line-badge.modified {
+        background: #fefce8;
+        color: #854d0e;
+        border: 1px solid #fde68a;
+      }
+
+      /* DRAG & DROP */
+      .drag-handle {
+        color: var(--text-dimmer);
+        cursor: grab;
+        padding: 0 4px;
+        font-size: 13px;
+        user-select: none;
+        flex-shrink: 0;
+        letter-spacing: -1px;
+      }
+      .drag-handle:active {
+        cursor: grabbing;
+      }
+      .line-card.dragging {
+        opacity: 0.35;
+      }
+      .line-card.drag-over {
+        border-color: var(--text);
+        background: #fafafa;
+      }
+
+      /* VALIDATION */
+      .input-error {
+        border-color: var(--red) !important;
+      }
+      .field-error-msg {
+        font-size: 11px;
+        color: var(--red);
+        margin-top: 4px;
+      }
+
       /* TOAST */
       .toast {
         position: fixed;
@@ -732,7 +769,7 @@
           recapEmpty: "Les totaux apparaitront ici.",
           newLineTitle: "Nouvelle ligne",
           lineName: "Nom de la ligne",
-          lineNamePlaceholder: "Ex: Usine de jus d'orange",
+          lineNamePlaceholder: "Ex: Bijoux chers",
           cancel: "Annuler",
           create: "Creer",
           noName: "Sans nom",
@@ -778,7 +815,7 @@
           recapEmpty: "Totals will appear here.",
           newLineTitle: "New Line",
           lineName: "Line Name",
-          lineNamePlaceholder: "Ex: Orange Juice Factory",
+          lineNamePlaceholder: "Ex: Expensive Jewelry",
           cancel: "Cancel",
           create: "Create",
           noName: "Unnamed",
@@ -872,6 +909,7 @@
 
       let lines = loadLines();
       let expandedIds = new Set();
+      let modifiedIds = new Set();
 
       // ============================================================
       // EXPORT / IMPORT
@@ -1058,6 +1096,65 @@
       // ============================================================
       // RENDER
       // ============================================================
+      // ============================================================
+      // DRAG & DROP
+      // ============================================================
+      let dragSrcId = null;
+
+      function initDragDrop() {
+        const list = document.getElementById("lines-list");
+
+        list
+          .querySelectorAll(".drag-handle[data-drag-id]")
+          .forEach((handle) => {
+            handle.addEventListener("dragstart", (e) => {
+              dragSrcId = handle.dataset.dragId;
+              e.dataTransfer.effectAllowed = "move";
+              e.dataTransfer.setData("text/plain", dragSrcId);
+              setTimeout(() => {
+                const card = document.getElementById(`card-${dragSrcId}`);
+                if (card) card.classList.add("dragging");
+              }, 0);
+            });
+
+            handle.addEventListener("dragend", () => {
+              list
+                .querySelectorAll(".line-card")
+                .forEach((c) => c.classList.remove("dragging", "drag-over"));
+              dragSrcId = null;
+            });
+          });
+
+        list.querySelectorAll(".line-card[data-id]").forEach((card) => {
+          card.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = "move";
+            if (dragSrcId && card.dataset.id !== dragSrcId) {
+              card.classList.add("drag-over");
+            }
+          });
+
+          card.addEventListener("dragleave", (e) => {
+            if (!card.contains(e.relatedTarget)) {
+              card.classList.remove("drag-over");
+            }
+          });
+
+          card.addEventListener("drop", (e) => {
+            e.preventDefault();
+            card.classList.remove("drag-over");
+            if (!dragSrcId || card.dataset.id === dragSrcId) return;
+            const srcIdx = lines.findIndex((l) => l.id === dragSrcId);
+            const dstIdx = lines.findIndex((l) => l.id === card.dataset.id);
+            if (srcIdx === -1 || dstIdx === -1) return;
+            const [moved] = lines.splice(srcIdx, 1);
+            lines.splice(dstIdx, 0, moved);
+            saveLines(lines);
+            renderAll();
+          });
+        });
+      }
+
       function renderAll() {
         const container = document.getElementById("lines-list");
         document.getElementById("line-count").textContent = t("lineCount")(
@@ -1083,6 +1180,7 @@
           bindLineEvents(line.id);
         });
 
+        initDragDrop();
         updateRecap();
       }
 
@@ -1113,7 +1211,7 @@
               </div>`,
                   )
                   .join("")
-              : '<div style="font-size:12px;color:var(--text-dimmer)">—</div>'
+              : ""
           }
         </div>
         <div>
@@ -1129,7 +1227,7 @@
               </div>`,
                   )
                   .join("")
-              : '<div style="font-size:12px;color:var(--text-dimmer)">—</div>'
+              : ""
           }
         </div>
       </div>
@@ -1137,10 +1235,12 @@
         }
 
         return `
-  <div class="line-card ${isExpanded ? "expanded" : ""}" id="card-${line.id}">
+  <div class="line-card ${isExpanded ? "expanded" : ""}" id="card-${line.id}" data-id="${line.id}">
     <div class="line-card-header" onclick="toggleCard('${line.id}')">
+      <span class="drag-handle" draggable="true" data-drag-id="${line.id}" onclick="event.stopPropagation()" title="Déplacer">⠿⠿</span>
       <span class="line-card-name">${escHtml(line.name || t("noName"))}</span>
       ${hoursPerWeek > 0 ? `<span class="line-badge active">${fmt(hoursPerWeek)}h/week</span>` : ""}
+      ${modifiedIds.has(line.id) ? `<span class="line-badge modified">modified</span>` : ""}
       <span class="chevron">▼</span>
     </div>
     <div class="line-card-body">
@@ -1200,7 +1300,7 @@
 
       function renderSingleProducedResource(resources, lineId) {
         if (resources.length === 0) {
-          return '<div style="font-size:12px;color:var(--text-dimmer)">—</div>';
+          return "";
         }
         const r = resources[0];
         return `
@@ -1286,14 +1386,59 @@
         hideAutocomplete(input);
       }
 
+      // ============================================================
+      // VALIDATION
+      // ============================================================
+      const FIELD_RULES = {
+        daysPerWeek: { min: 0, max: 7, label: () => t("daysPerWeek") },
+        hoursPerWeek: { min: 0, max: 168, label: () => t("hoursPerWeek") },
+        surplus: { min: 0, max: 9999, label: () => t("surplus") },
+      };
+
+      function validateField(input, field) {
+        const rule = FIELD_RULES[field];
+        if (!rule || input.value === "") {
+          clearFieldError(input);
+          return true;
+        }
+        const val = parseFloat(input.value);
+        if (isNaN(val) || val < rule.min || val > rule.max) {
+          setFieldError(input, `Max: ${rule.max}`);
+          return false;
+        }
+        clearFieldError(input);
+        return true;
+      }
+
+      function setFieldError(input, msg) {
+        input.classList.add("input-error");
+        let err = input.parentElement.querySelector(".field-error-msg");
+        if (!err) {
+          err = document.createElement("div");
+          err.className = "field-error-msg";
+          input.parentElement.appendChild(err);
+        }
+        err.textContent = msg;
+      }
+
+      function clearFieldError(input) {
+        input.classList.remove("input-error");
+        const err = input.parentElement.querySelector(".field-error-msg");
+        if (err) err.remove();
+      }
+
       function bindLineEvents(id) {
         const card = document.getElementById(`card-${id}`);
         if (!card) return;
         card.querySelectorAll("input[data-field]").forEach((input) => {
           input.addEventListener("input", () => {
             const line = lines.find((l) => l.id === id);
-            if (line) {
-              line[input.dataset.field] = input.value;
+            if (!line) return;
+            const field = input.dataset.field;
+            const valid = validateField(input, field);
+            if (valid) {
+              line[field] = input.value;
+              modifiedIds.add(id);
               refreshResults(id);
             }
           });
@@ -1301,28 +1446,39 @@
       }
 
       function refreshResults(id) {
-        // Re-render just results + badge without full render
         const line = lines.find((l) => l.id === id);
         if (!line) return;
         const card = document.getElementById(`card-${id}`);
         if (!card) return;
+        const header = card.querySelector(".line-card-header");
 
-        // Update badge
+        // Update hours badge
         const { hoursPerWeek } = calcLine(line);
-        const badge = card.querySelector(".line-badge");
+        const badge = card.querySelector(".line-badge.active");
         if (hoursPerWeek > 0) {
           if (badge) {
             badge.textContent = `${fmt(hoursPerWeek)}h/week`;
-            badge.className = "line-badge active";
           } else {
-            const chevron = card.querySelector(".chevron");
+            const chevron = header.querySelector(".chevron");
             const badgeEl = document.createElement("span");
             badgeEl.className = "line-badge active";
             badgeEl.textContent = `${fmt(hoursPerWeek)}h/week`;
-            card
-              .querySelector(".line-card-header")
-              .insertBefore(badgeEl, chevron);
+            header.insertBefore(badgeEl, chevron);
           }
+        }
+
+        // Update modified badge
+        const existingMod = header.querySelector(".line-badge.modified");
+        if (modifiedIds.has(id)) {
+          if (!existingMod) {
+            const chevron = header.querySelector(".chevron");
+            const modEl = document.createElement("span");
+            modEl.className = "line-badge modified";
+            modEl.textContent = "modified";
+            header.insertBefore(modEl, chevron);
+          }
+        } else {
+          if (existingMod) existingMod.remove();
         }
 
         updateRecap();
@@ -1354,6 +1510,7 @@
         if (!line[type]) line[type] = [];
         if (!line[type][index]) line[type][index] = {};
         line[type][index][field] = value;
+        modifiedIds.add(lineId);
         refreshResults(lineId);
       }
 
@@ -1403,6 +1560,7 @@
         const nameInput = card.querySelector('input[data-field="name"]');
         if (nameInput) line.name = nameInput.value;
         saveLines(lines);
+        modifiedIds.delete(id);
         showToast(t("lineSaved"));
         renderAll();
         expandedIds.add(id);
