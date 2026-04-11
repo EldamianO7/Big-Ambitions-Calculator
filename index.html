@@ -65,6 +65,11 @@
         align-items: center;
         gap: 10px;
       }
+      .header-top {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
       .logo-icon {
         font-size: 18px;
       }
@@ -244,6 +249,17 @@
         border: 1px solid var(--border);
         border-radius: var(--radius);
         transition: border-color 0.15s;
+        max-width: 100%;
+        overflow: visible;
+      }
+      .line-card.dragging {
+        opacity: 1;
+        border-color: var(--text);
+        background: #ffffff;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+      }
+      .lines-list.dragging-active .line-card:not(.dragging) {
+        filter: brightness(0.8);
       }
       .line-card:hover {
         border-color: var(--border-focus);
@@ -257,11 +273,47 @@
         align-items: center;
         gap: 12px;
         cursor: pointer;
+        min-width: 0;
+        width: 100%;
+        overflow: hidden;
+      }
+      .line-card-header > * {
+        min-width: 0;
+      }
+      .drag-handle {
+        border: 0;
+        background: transparent;
+        color: var(--text-dimmer);
+        cursor: grab;
+        font-size: 14px;
+        line-height: 1;
+        padding: 2px 4px;
+        touch-action: none;
+        flex: 0 0 auto;
+      }
+      .drag-handle:active {
+        cursor: grabbing;
       }
       .line-card-name {
-        flex: 1;
+        flex: 1 1 auto;
+        width: 0;
         font-size: 14px;
         font-weight: 500;
+        min-width: 0;
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .line-dirty-tag {
+        font-size: 11px;
+        padding: 2px 7px;
+        border-radius: var(--radius-sm);
+        background: #fff7ed;
+        color: #c2410c;
+        border: 1px solid #fed7aa;
+        font-weight: 500;
+        flex: 0 0 auto;
       }
       .line-badge {
         font-size: 12px;
@@ -270,6 +322,7 @@
         background: #f5f5f5;
         color: var(--text-dim);
         font-weight: 500;
+        flex: 0 0 auto;
       }
       .line-badge.active {
         background: #f0fdf4;
@@ -278,6 +331,7 @@
       .chevron {
         color: var(--text-dimmer);
         font-size: 10px;
+        flex: 0 0 auto;
       }
 
       .line-card-body {
@@ -438,25 +492,62 @@
         margin-bottom: 8px;
         color: var(--text-dim);
       }
+      .field-warning {
+        margin-top: 4px;
+        font-size: 11px;
+        color: var(--red);
+      }
 
       /* RECAP SIDEBAR */
       .recap-body {
         padding: 16px;
       }
+      .sidebar .panel {
+        position: sticky;
+        top: 98px;
+      }
+      .mobile-tabs {
+        display: none;
+        margin-bottom: 10px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        overflow: hidden;
+      }
+      .mobile-tab-btn {
+        flex: 1;
+        border: 0;
+        background: #fff;
+        padding: 8px 10px;
+        font-size: 12px;
+        font-family: inherit;
+        cursor: pointer;
+      }
+      .mobile-tab-btn.active {
+        background: var(--accent);
+        color: #fff;
+      }
       .recap-stat {
         display: flex;
         justify-content: space-between;
+        align-items: center;
+        gap: 10px;
         padding: 6px 0;
         border-bottom: 1px solid #f5f5f5;
         font-size: 13px;
       }
       .recap-stat-name {
         color: var(--text-dim);
+        flex: 1;
+        min-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       .recap-stat-val {
         font-weight: 500;
         font-family: inherit;
         font-variant-numeric: tabular-nums;
+        flex-shrink: 0;
       }
       .recap-section-sep {
         font-size: 11px;
@@ -501,43 +592,6 @@
         margin-bottom: 20px;
       }
 
-      .line-badge.modified {
-        background: #fefce8;
-        color: #854d0e;
-        border: 1px solid #fde68a;
-      }
-
-      /* DRAG & DROP */
-      .drag-handle {
-        color: var(--text-dimmer);
-        cursor: grab;
-        padding: 0 4px;
-        font-size: 13px;
-        user-select: none;
-        flex-shrink: 0;
-        letter-spacing: -1px;
-      }
-      .drag-handle:active {
-        cursor: grabbing;
-      }
-      .line-card.dragging {
-        opacity: 0.35;
-      }
-      .line-card.drag-over {
-        border-color: var(--text);
-        background: #fafafa;
-      }
-
-      /* VALIDATION */
-      .input-error {
-        border-color: var(--red) !important;
-      }
-      .field-error-msg {
-        font-size: 11px;
-        color: var(--red);
-        margin-top: 4px;
-      }
-
       /* TOAST */
       .toast {
         position: fixed;
@@ -567,15 +621,49 @@
         }
         header {
           padding: 12px 16px;
-          flex-wrap: wrap;
+          flex-wrap: nowrap;
+          flex-direction: column;
+          align-items: stretch;
           gap: 12px;
+          position: sticky;
+        }
+        .header-top {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 10px;
         }
         .header-actions {
-          flex-wrap: wrap;
-          gap: 6px;
+          width: 100%;
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 8px;
+          align-items: center;
+        }
+        .header-actions .btn {
+          width: 100%;
+          justify-content: center;
+        }
+        .header-actions .btn-primary {
+          grid-column: 1 / -1;
+        }
+        .header-actions .lang-toggle {
+          position: absolute;
+          top: 12px;
+          right: 16px;
+          z-index: 2;
         }
         .header-sub {
           display: none;
+        }
+        .mobile-tabs {
+          display: flex;
+        }
+        .sidebar .panel {
+          position: static;
+        }
+        .mobile-hidden {
+          display: none !important;
         }
         .btn {
           font-size: 12px;
@@ -587,6 +675,7 @@
         }
         .lines-list {
           padding: 12px;
+          overflow-x: hidden;
         }
         .line-card-body {
           padding: 16px 12px;
@@ -606,6 +695,12 @@
         .resource-row input[type="number"] {
           width: 60px;
         }
+        .resource-row input[type="text"] {
+          min-width: 0;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
         .card-actions {
           flex-wrap: wrap;
           gap: 8px;
@@ -623,12 +718,14 @@
   </head>
   <body>
     <header>
-      <div class="logo">
-        <div class="logo-icon">🏭</div>
-        <div>
-          <h1>Big <span>Ambitions</span></h1>
-          <div class="header-sub" data-i18n="headerSub">
-            Calculateur de lignes de production
+      <div class="header-top">
+        <div class="logo">
+          <div class="logo-icon">🏭</div>
+          <div>
+            <h1>Big <span>Ambitions</span></h1>
+            <div class="header-sub" data-i18n="headerSub">
+              Calculateur de lignes de production
+            </div>
           </div>
         </div>
       </div>
@@ -673,8 +770,26 @@
     />
 
     <div class="app">
+      <div class="mobile-tabs">
+        <button
+          class="mobile-tab-btn active"
+          id="tab-lines"
+          onclick="setMobileTab('lines')"
+          data-i18n="tabLines"
+        >
+          Lignes
+        </button>
+        <button
+          class="mobile-tab-btn"
+          id="tab-recap"
+          onclick="setMobileTab('recap')"
+          data-i18n="tabRecap"
+        >
+          Recap
+        </button>
+      </div>
       <!-- MAIN -->
-      <div>
+      <div id="lines-section">
         <div class="panel">
           <div class="panel-header">
             <span class="panel-title" data-i18n="productionLines"
@@ -695,7 +810,7 @@
       </div>
 
       <!-- SIDEBAR -->
-      <div class="sidebar">
+      <div class="sidebar" id="recap-section">
         <div class="panel">
           <div class="panel-header">
             <span class="panel-title" data-i18n="globalRecap"
@@ -720,8 +835,28 @@
           <input
             type="text"
             id="new-line-name"
+            maxlength="48"
             data-i18n-placeholder="lineNamePlaceholder"
           />
+        </div>
+        <div class="form-group" style="margin-top: 12px">
+          <label data-i18n="recipe">Recette</label>
+          <select
+            id="new-line-recipe"
+            style="
+              width: 100%;
+              padding: 8px 10px;
+              border: 1px solid var(--border);
+              border-radius: var(--radius-sm);
+              font-family: inherit;
+            "
+          ></select>
+          <div
+            style="margin-top: 6px; font-size: 12px; color: var(--text-dim)"
+            data-i18n="recipePrompt"
+          >
+            Choisis une recette pour pre-remplir la ligne
+          </div>
         </div>
         <div
           class="modal-actions"
@@ -765,44 +900,70 @@
           newLine: "+ Nouvelle ligne",
           productionLines: "Lignes de production",
           lineCount: (n) => `${n} ligne(s)`,
-          globalRecap: "Recap global / semaine",
+          globalRecap: "Récap global / semaine",
           recapEmpty: "Les totaux apparaitront ici.",
           newLineTitle: "Nouvelle ligne",
           lineName: "Nom de la ligne",
-          lineNamePlaceholder: "Ex: Bijoux chers",
+          lineNamePlaceholder: "Ex: Usine de burgers",
           cancel: "Annuler",
-          create: "Creer",
+          create: "Créer",
           noName: "Sans nom",
           emptyTitle: "Aucune ligne de production.",
-          emptyDesc: "Cree ta premiere ligne pour commencer.",
+          emptyDesc: "Crée ta première ligne pour commencer.",
           daysPerWeek: "Jours de travail / semaine",
           hoursPerWeek: "Heures de travail / semaine",
-          surplus: "Surplus souhaite (%)",
-          consumedPerHour: "Consomme par heure",
+          surplus: "Surplus souhaité (%)",
+          consumedPerHour: "Consommé par heure",
           producedPerHour: "Produit par heure",
-          addConsumed: "+ Ajouter une ressource consommee",
+          addConsumed: "+ Ajouter une ressource consommée",
           addProduced: "+ Definir la ressource produite",
           changeProduced: "Changer la ressource produite",
-          resultsPerWeek: "Resultats par semaine",
-          consumedWeek: "Consomme/semaine",
+          resultsPerWeek: "Résultats par semaine",
+          consumedWeek: "Consommé/semaine",
           producedWeek: "Produit/semaine",
           delete: "Supprimer",
           duplicate: "Dupliquer",
           save: "Sauvegarder",
-          lineSaved: "Ligne sauvegardee",
-          lineDeleted: "Ligne supprimee",
-          lineCreated: "Ligne creee",
+          lineSaved: "Ligne sauvegardée",
+          lineDeleted: "Ligne supprimée",
+          lineCreated: "Ligne créée",
           deleteConfirm: "Supprimer cette ligne ?",
           resourceName: "Nom ressource",
           perHour: "/h",
-          consumed: "Consomme",
+          consumed: "Consommé",
           produced: "Produit",
-          exportSuccess: "Donnees exportees",
-          importSuccess: "Donnees importees",
+          exportSuccess: "Donnees exportées",
+          importSuccess: "Donnees importées",
           importError: "Erreur lors de l'import",
+          resourceDbError:
+            "Erreur data.json: IDs manquants/invalides/dupliqués.",
+          importTooLarge: "Fichier d'import trop volumineux (max 1000 lignes).",
           daysPlaceholder: "Ex: 5",
           hoursPlaceholder: "Ex: 40",
           surplusPlaceholder: "Ex: 20",
+          price: "Prix",
+          priceOptional: "Prix (optionnel)",
+          totalCost: "Coût total",
+          costWeek: "Coût/semaine",
+          revenueWeek: "Revenus/semaine",
+          netWeek: "Marge nette/semaine",
+          fixInputsFirst: "Corrige les champs invalides avant de sauvegarder.",
+          modified: "Modifié",
+          unsavedChanges: "Il y a des changements non sauvegardés.",
+          tabLines: "Lignes",
+          tabRecap: "Récap",
+          invalidHoursRange: "Les heures/semaine doivent être entre 0 et 168.",
+          invalidDaysRange: "Les jours/semaine doivent être entre 0 et 7.",
+          invalidHoursVsDays:
+            "Les heures/semaine ne peuvent pas dépasser jours x 24.",
+          invalidSurplus: "Le surplus doit etre >= 0.",
+          dragHint: "Glisser pour réordonner",
+          hoursBadge: "h/sem",
+          recipe: "Recette",
+          recipePrompt: "Choisis une recette pour pré-remplir la ligne",
+          noRecipe: "Aucune recette",
+          none: "Aucune",
+          recipeRequired: "Choisis une recette.",
         },
         en: {
           headerSub: "Production Line Calculator",
@@ -815,7 +976,7 @@
           recapEmpty: "Totals will appear here.",
           newLineTitle: "New Line",
           lineName: "Line Name",
-          lineNamePlaceholder: "Ex: Expensive Jewelry",
+          lineNamePlaceholder: "Ex: Burger Factory",
           cancel: "Cancel",
           create: "Create",
           noName: "Unnamed",
@@ -846,9 +1007,33 @@
           exportSuccess: "Data exported",
           importSuccess: "Data imported",
           importError: "Import error",
+          resourceDbError: "data.json error: missing/invalid/duplicate IDs.",
+          importTooLarge: "Import file too large (max 1000 lines).",
           daysPlaceholder: "Ex: 5",
           hoursPlaceholder: "Ex: 40",
           surplusPlaceholder: "Ex: 20",
+          price: "Price",
+          priceOptional: "Price (optional)",
+          totalCost: "Total cost",
+          costWeek: "Cost/week",
+          revenueWeek: "Revenue/week",
+          netWeek: "Net margin/week",
+          fixInputsFirst: "Fix invalid fields before saving.",
+          modified: "Modified",
+          unsavedChanges: "You have unsaved changes.",
+          tabLines: "Lines",
+          tabRecap: "Recap",
+          invalidHoursRange: "Hours/week must be between 0 and 168.",
+          invalidDaysRange: "Days/week must be between 0 and 7.",
+          invalidHoursVsDays: "Hours/week cannot exceed days x 24.",
+          invalidSurplus: "Surplus must be >= 0.",
+          dragHint: "Drag to reorder",
+          hoursBadge: "h/wk",
+          recipe: "Recipe",
+          recipePrompt: "Choose a recipe to prefill the line",
+          noRecipe: "No recipe",
+          none: "None",
+          recipeRequired: "Please choose a recipe.",
         },
       };
 
@@ -859,6 +1044,9 @@
         localStorage.setItem(LANG_KEY, lang);
         updateLangButtons();
         applyTranslations();
+        if (document.getElementById("modal-new")?.classList.contains("open")) {
+          populateRecipeOptions();
+        }
         renderAll();
       }
 
@@ -909,18 +1097,23 @@
 
       let lines = loadLines();
       let expandedIds = new Set();
-      let modifiedIds = new Set();
+      let dirtyIds = new Set();
+      const MAX_LINE_NAME_LENGTH = 48;
+      const MAX_RESOURCE_NAME_LENGTH = 48;
+      let mobileTab = "lines";
 
       // ============================================================
       // EXPORT / IMPORT
       // ============================================================
       function exportData() {
+        const now = new Date();
+        const stamp = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}_${String(now.getHours()).padStart(2, "0")}-${String(now.getMinutes()).padStart(2, "0")}`;
         const data = JSON.stringify(lines, null, 2);
         const blob = new Blob([data], { type: "application/json" });
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = "big-ambitions-backup.json";
+        a.download = `big-ambitions-backup-${stamp}.json`;
         a.click();
         URL.revokeObjectURL(url);
         showToast(t("exportSuccess"));
@@ -938,9 +1131,14 @@
           try {
             const imported = JSON.parse(e.target.result);
             if (Array.isArray(imported)) {
-              lines = imported;
+              if (imported.length > 1000) {
+                showToast(t("importTooLarge"));
+                return;
+              }
+              lines = imported.map(normalizeLine);
               saveLines(lines);
               expandedIds.clear();
+              dirtyIds.clear();
               renderAll();
               showToast(t("importSuccess"));
             } else {
@@ -957,17 +1155,223 @@
       // ============================================================
       // RESOURCE AUTOCOMPLETE
       // ============================================================
-      function getAllResourceNames() {
-        const names = new Set();
-        lines.forEach((line) => {
-          (line.consumes || []).forEach((r) => {
-            if (r.name && r.name.trim()) names.add(r.name.trim());
+      let RESOURCE_DB = { consumed: [], produced: [] };
+      let RECIPE_DB = [];
+
+      function normalizeLocalizedNames(rawNames) {
+        if (rawNames && typeof rawNames === "object") {
+          return {
+            en: (rawNames.en || "").toString(),
+            fr: (rawNames.fr || "").toString(),
+          };
+        }
+        const fallback = (rawNames || "").toString();
+        return { en: fallback, fr: fallback };
+      }
+
+      function localizeName(names) {
+        if (!names) return "";
+        return names[currentLang] || names.en || names.fr || "";
+      }
+
+      function sanitizeResourceDb(rawDb) {
+        const safeDb = rawDb && typeof rawDb === "object" ? rawDb : {};
+        const normalizeList = (list, listName, { requireId }) => {
+          const cleaned = (Array.isArray(list) ? list : []).filter(
+            (item) => item && typeof item === "object" && item.names,
+          );
+          const usedIds = new Set();
+          return cleaned.map((item, index) => {
+            const parsedId = parseInt(item.id, 10);
+            const hasIdField =
+              item.id !== undefined && item.id !== null && item.id !== "";
+            if (requireId && !hasIdField) {
+              throw new Error(`${listName}[${index}] is missing required id`);
+            }
+            if (!hasIdField) {
+              return {
+                id: null,
+                names: normalizeLocalizedNames(item.names),
+                price:
+                  item.price === undefined || item.price === null
+                    ? undefined
+                    : Math.max(0, parseFloat(item.price) || 0),
+                qty: item.qty,
+              };
+            }
+            if (!Number.isFinite(parsedId) || parsedId <= 0) {
+              throw new Error(
+                `${listName}[${index}] has invalid id: ${item.id}`,
+              );
+            }
+            if (usedIds.has(parsedId)) {
+              throw new Error(`${listName} has duplicate id: ${parsedId}`);
+            }
+            usedIds.add(parsedId);
+            if (listName === "produced") {
+              if (item.recipe !== undefined || item.recipes !== undefined) {
+                throw new Error(
+                  `${listName}[${index}]: use top-level "recipes" with producedId, not embedded recipe/recipes`,
+                );
+              }
+            }
+            return {
+              id: parsedId,
+              names: normalizeLocalizedNames(item.names),
+              price:
+                item.price === undefined || item.price === null
+                  ? undefined
+                  : Math.max(0, parseFloat(item.price) || 0),
+              qty: item.qty,
+            };
           });
-          (line.produces || []).forEach((r) => {
-            if (r.name && r.name.trim()) names.add(r.name.trim());
+        };
+        return {
+          consumed: normalizeList(safeDb.consumed, "consumed", {
+            requireId: true,
+          }),
+          produced: normalizeList(safeDb.produced, "produced", {
+            requireId: true,
+          }),
+        };
+      }
+
+      function getConsumedById(id) {
+        const parsedId = parseInt(id, 10);
+        if (!Number.isFinite(parsedId)) return null;
+        return (
+          RESOURCE_DB.consumed.find((item) => item.id === parsedId) || null
+        );
+      }
+
+      function findConsumedPrice(names) {
+        const keyEn = (names.en || "").trim().toLowerCase();
+        const keyFr = (names.fr || "").trim().toLowerCase();
+        const found = RESOURCE_DB.consumed.find((item) => {
+          const itemEn = (item.names?.en || "").trim().toLowerCase();
+          const itemFr = (item.names?.fr || "").trim().toLowerCase();
+          return itemEn === keyEn || itemFr === keyFr;
+        });
+        return found && found.price !== undefined ? found.price : "";
+      }
+
+      function normalizeRecipe(recipe, product) {
+        const recipeObj = recipe && typeof recipe === "object" ? recipe : {};
+        const producedQty = Math.max(
+          0,
+          Math.floor(parseFloat(recipeObj.producedQty ?? 1) || 0),
+        );
+        const consumes = (
+          Array.isArray(recipeObj.consumes) ? recipeObj.consumes : []
+        )
+          .map((r) => {
+            let names = normalizeLocalizedNames(r.names || r.name || "");
+            let resolvedPrice =
+              r.price === undefined || r.price === null || r.price === ""
+                ? ""
+                : Math.max(0, parseFloat(r.price) || 0);
+            if (
+              (r.productId !== undefined && r.productId !== null) ||
+              !localizeName(names)
+            ) {
+              const consumedRef = getConsumedById(r.productId);
+              if (consumedRef) {
+                names = consumedRef.names;
+                if (resolvedPrice === "" && consumedRef.price !== undefined) {
+                  resolvedPrice = consumedRef.price;
+                }
+              }
+            }
+            return {
+              names,
+              qty: Math.max(0, Math.floor(parseFloat(r.qty) || 0)),
+              price:
+                resolvedPrice === "" ? findConsumedPrice(names) : resolvedPrice,
+            };
+          })
+          .filter((r) => localizeName(r.names));
+        return {
+          id: recipeObj.id || uid(),
+          produced: { names: product.names, qty: producedQty || 1 },
+          consumes,
+        };
+      }
+
+      function buildRecipeDb(rawDb) {
+        const safeDb = rawDb && typeof rawDb === "object" ? rawDb : {};
+        const recipes = [];
+        if (!Array.isArray(safeDb.recipes)) {
+          throw new Error(
+            'data.json must include a "recipes" array (top-level)',
+          );
+        }
+        safeDb.recipes.forEach((r, index) => {
+          const producedId = parseInt(r?.producedId, 10);
+          if (!Number.isFinite(producedId) || producedId <= 0) {
+            throw new Error(
+              `recipes[${index}] has invalid producedId: ${r?.producedId}`,
+            );
+          }
+          const product =
+            RESOURCE_DB.produced.find((p) => p.id === producedId) || null;
+          if (!product) {
+            throw new Error(
+              `recipes[${index}] references unknown producedId: ${producedId}`,
+            );
+          }
+          recipes.push(normalizeRecipe(r, product));
+        });
+
+        const unique = new Map();
+        recipes.forEach((r) => {
+          const key = `${localizeName(r.produced.names).toLowerCase()}::${r.produced.qty}`;
+          if (!unique.has(key)) unique.set(key, r);
+        });
+        return Array.from(unique.values());
+      }
+
+      async function loadResourceDb() {
+        try {
+          const res = await fetch("./data.json", { cache: "no-store" });
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          const rawDb = await res.json();
+          RESOURCE_DB = sanitizeResourceDb(rawDb);
+          RECIPE_DB = buildRecipeDb(rawDb);
+        } catch (err) {
+          console.warn("Failed to load RESOURCE_DB from data.json", err);
+          RESOURCE_DB = { consumed: [], produced: [] };
+          RECIPE_DB = [];
+          showToast(t("resourceDbError"));
+        }
+      }
+
+      function getAutocompleteResources(type) {
+        const dbList =
+          type === "consumes" ? RESOURCE_DB.consumed : RESOURCE_DB.produced;
+        const map = new Map();
+        dbList.forEach((r) => {
+          const localized =
+            (r.names && r.names[currentLang]) || r.names?.en || "";
+          if (!localized) return;
+          map.set(localized.toLowerCase(), { name: localized, price: r.price });
+        });
+
+        lines.forEach((line) => {
+          (line[type] || []).forEach((r) => {
+            if (!r.name || !r.name.trim()) return;
+            const key = r.name.trim().toLowerCase();
+            if (!map.has(key)) {
+              map.set(key, {
+                name: r.name.trim(),
+                price: r.price !== undefined ? parseFloat(r.price) || 0 : 0,
+              });
+            }
           });
         });
-        return Array.from(names).sort();
+
+        return Array.from(map.values()).sort((a, b) =>
+          a.name.localeCompare(b.name),
+        );
       }
 
       // ============================================================
@@ -984,37 +1388,116 @@
         setTimeout(() => t.classList.remove("show"), 2200);
       }
 
+      function setMobileTab(tab) {
+        mobileTab = tab;
+        const linesSection = document.getElementById("lines-section");
+        const recapSection = document.getElementById("recap-section");
+        if (!linesSection || !recapSection) return;
+        const isMobile = window.matchMedia("(max-width: 900px)").matches;
+        if (!isMobile) {
+          linesSection.classList.remove("mobile-hidden");
+          recapSection.classList.remove("mobile-hidden");
+          return;
+        }
+        linesSection.classList.toggle("mobile-hidden", tab !== "lines");
+        recapSection.classList.toggle("mobile-hidden", tab !== "recap");
+        document
+          .getElementById("tab-lines")
+          .classList.toggle("active", tab === "lines");
+        document
+          .getElementById("tab-recap")
+          .classList.toggle("active", tab === "recap");
+      }
+
+      function trimLineName(name) {
+        return (name || "").toString().trim().slice(0, MAX_LINE_NAME_LENGTH);
+      }
+
+      function trimResourceName(name) {
+        return (name || "")
+          .toString()
+          .trim()
+          .slice(0, MAX_RESOURCE_NAME_LENGTH);
+      }
+
+      function markLineDirty(id, isDirty = true) {
+        if (isDirty) dirtyIds.add(id);
+        else dirtyIds.delete(id);
+        const card = document.getElementById(`card-${id}`);
+        if (!card) return;
+        const header = card.querySelector(".line-card-header");
+        if (!header) return;
+        let tag = header.querySelector(".line-dirty-tag");
+        if (isDirty && !tag) {
+          const badge = header.querySelector(".line-badge");
+          const chevron = header.querySelector(".chevron");
+          tag = document.createElement("span");
+          tag.className = "line-dirty-tag";
+          tag.textContent = t("modified");
+          header.insertBefore(tag, badge || chevron);
+        }
+        if (!isDirty && tag) tag.remove();
+      }
+
+      function sanitizeWholeNumberInput(value) {
+        if (value === "") return "";
+        const n = Math.floor(parseFloat(value));
+        if (!Number.isFinite(n) || n < 0) return "0";
+        return String(n);
+      }
+
       function calcLine(line) {
+        sanitizeLine(line);
         const hoursPerWeek = parseFloat(line.hoursPerWeek) || 0;
         const surplus = parseFloat(line.surplus) || 0;
         const mult = hoursPerWeek * (1 + surplus / 100);
 
-        const consumed = {}; // name -> qty/semaine
+        const consumed = {}; // name -> { display, qty, cost }
         const produced = {};
+        let totalCost = 0;
+        let totalRevenue = 0;
 
         (line.consumes || []).forEach((r) => {
           if (r.name && r.qty) {
             const normalizedName = r.name.trim().toLowerCase();
             const displayName = r.name.trim();
+            const qtyPerWeek = (parseInt(r.qty) || 0) * mult;
+            const price = parseFloat(r.price) || 0;
+            const cost = qtyPerWeek * price;
+
             if (!consumed[normalizedName]) {
-              consumed[normalizedName] = { display: displayName, qty: 0 };
+              consumed[normalizedName] = {
+                display: displayName,
+                qty: 0,
+                cost: 0,
+              };
             }
-            consumed[normalizedName].qty += (parseInt(r.qty) || 0) * mult;
+            consumed[normalizedName].qty += qtyPerWeek;
+            consumed[normalizedName].cost += cost;
+            totalCost += cost;
           }
         });
         (line.produces || []).forEach((r) => {
           if (r.name && r.qty) {
             const normalizedName = r.name.trim().toLowerCase();
             const displayName = r.name.trim();
+            const qtyPerWeek = (parseInt(r.qty) || 0) * hoursPerWeek;
+            const price = parseFloat(r.price) || 0;
+            const revenue = qtyPerWeek * price;
             if (!produced[normalizedName]) {
-              produced[normalizedName] = { display: displayName, qty: 0 };
+              produced[normalizedName] = {
+                display: displayName,
+                qty: 0,
+                revenue: 0,
+              };
             }
-            produced[normalizedName].qty +=
-              (parseInt(r.qty) || 0) * hoursPerWeek;
+            produced[normalizedName].qty += qtyPerWeek;
+            produced[normalizedName].revenue += revenue;
+            totalRevenue += revenue;
           }
         });
 
-        return { consumed, produced, hoursPerWeek };
+        return { consumed, produced, hoursPerWeek, totalCost, totalRevenue };
       }
 
       // ============================================================
@@ -1023,20 +1506,31 @@
       function updateRecap() {
         const totalConsumed = {};
         const totalProduced = {};
+        let grandTotalCost = 0;
+        let grandTotalRevenue = 0;
 
         lines.forEach((line) => {
-          const { consumed, produced } = calcLine(line);
+          const { consumed, produced, totalCost, totalRevenue } =
+            calcLine(line);
+          grandTotalCost += totalCost;
+          grandTotalRevenue += totalRevenue;
           Object.entries(consumed).forEach(([key, data]) => {
             if (!totalConsumed[key]) {
-              totalConsumed[key] = { display: data.display, qty: 0 };
+              totalConsumed[key] = { display: data.display, qty: 0, cost: 0 };
             }
             totalConsumed[key].qty += data.qty;
+            totalConsumed[key].cost += data.cost;
           });
           Object.entries(produced).forEach(([key, data]) => {
             if (!totalProduced[key]) {
-              totalProduced[key] = { display: data.display, qty: 0 };
+              totalProduced[key] = {
+                display: data.display,
+                qty: 0,
+                revenue: 0,
+              };
             }
             totalProduced[key].qty += data.qty;
+            totalProduced[key].revenue += data.revenue;
           });
         });
 
@@ -1057,9 +1551,13 @@
           Object.entries(totalConsumed)
             .sort((a, b) => a[1].display.localeCompare(b[1].display))
             .forEach(([key, data]) => {
+              const costStr =
+                data.cost > 0
+                  ? ` <span style="color:var(--text-dimmer);font-size:11px">($${fmt(data.cost)})</span>`
+                  : "";
               html += `<div class="recap-stat">
         <span class="recap-stat-name">${escHtml(data.display)}</span>
-        <span class="recap-stat-val" style="color:var(--red)">${fmt(data.qty)}</span>
+        <span class="recap-stat-val" style="color:var(--red)">${fmt(data.qty)}${costStr}</span>
       </div>`;
             });
         }
@@ -1069,11 +1567,33 @@
           Object.entries(totalProduced)
             .sort((a, b) => a[1].display.localeCompare(b[1].display))
             .forEach(([key, data]) => {
+              const revenueStr =
+                data.revenue > 0
+                  ? ` <span style="color:var(--text-dimmer);font-size:11px">($${fmt(data.revenue)})</span>`
+                  : "";
               html += `<div class="recap-stat">
         <span class="recap-stat-name">${escHtml(data.display)}</span>
-        <span class="recap-stat-val" style="color:var(--green)">${fmt(data.qty)}</span>
+        <span class="recap-stat-val" style="color:var(--green)">${fmt(data.qty)}${revenueStr}</span>
       </div>`;
             });
+        }
+
+        if (grandTotalCost > 0) {
+          html += `<div class="recap-section-sep" style="margin-top:16px">${t("totalCost")}</div>`;
+          html += `<div class="recap-stat">
+        <span class="recap-stat-name">${t("costWeek")}</span>
+        <span class="recap-stat-val" style="color:var(--red);font-weight:600">$${fmt(grandTotalCost)}</span>
+      </div>`;
+        }
+        if (grandTotalRevenue > 0) {
+          html += `<div class="recap-stat">
+        <span class="recap-stat-name">${t("revenueWeek")}</span>
+        <span class="recap-stat-val" style="color:var(--green);font-weight:600">$${fmt(grandTotalRevenue)}</span>
+      </div>`;
+          html += `<div class="recap-stat">
+        <span class="recap-stat-name">${t("netWeek")}</span>
+        <span class="recap-stat-val" style="font-weight:600;color:${grandTotalRevenue - grandTotalCost >= 0 ? "var(--green)" : "var(--red)"}">$${fmt(grandTotalRevenue - grandTotalCost)}</span>
+      </div>`;
         }
 
         container.innerHTML = html;
@@ -1096,65 +1616,6 @@
       // ============================================================
       // RENDER
       // ============================================================
-      // ============================================================
-      // DRAG & DROP
-      // ============================================================
-      let dragSrcId = null;
-
-      function initDragDrop() {
-        const list = document.getElementById("lines-list");
-
-        list
-          .querySelectorAll(".drag-handle[data-drag-id]")
-          .forEach((handle) => {
-            handle.addEventListener("dragstart", (e) => {
-              dragSrcId = handle.dataset.dragId;
-              e.dataTransfer.effectAllowed = "move";
-              e.dataTransfer.setData("text/plain", dragSrcId);
-              setTimeout(() => {
-                const card = document.getElementById(`card-${dragSrcId}`);
-                if (card) card.classList.add("dragging");
-              }, 0);
-            });
-
-            handle.addEventListener("dragend", () => {
-              list
-                .querySelectorAll(".line-card")
-                .forEach((c) => c.classList.remove("dragging", "drag-over"));
-              dragSrcId = null;
-            });
-          });
-
-        list.querySelectorAll(".line-card[data-id]").forEach((card) => {
-          card.addEventListener("dragover", (e) => {
-            e.preventDefault();
-            e.dataTransfer.dropEffect = "move";
-            if (dragSrcId && card.dataset.id !== dragSrcId) {
-              card.classList.add("drag-over");
-            }
-          });
-
-          card.addEventListener("dragleave", (e) => {
-            if (!card.contains(e.relatedTarget)) {
-              card.classList.remove("drag-over");
-            }
-          });
-
-          card.addEventListener("drop", (e) => {
-            e.preventDefault();
-            card.classList.remove("drag-over");
-            if (!dragSrcId || card.dataset.id === dragSrcId) return;
-            const srcIdx = lines.findIndex((l) => l.id === dragSrcId);
-            const dstIdx = lines.findIndex((l) => l.id === card.dataset.id);
-            if (srcIdx === -1 || dstIdx === -1) return;
-            const [moved] = lines.splice(srcIdx, 1);
-            lines.splice(dstIdx, 0, moved);
-            saveLines(lines);
-            renderAll();
-          });
-        });
-      }
-
       function renderAll() {
         const container = document.getElementById("lines-list");
         document.getElementById("line-count").textContent = t("lineCount")(
@@ -1168,6 +1629,7 @@
       <div style="margin-top:6px;font-size:12px;">${t("emptyDesc")}</div>
     </div>`;
           updateRecap();
+          setMobileTab(mobileTab);
           return;
         }
 
@@ -1178,17 +1640,20 @@
         // Rebind events
         lines.forEach((line) => {
           bindLineEvents(line.id);
+          updateHoursWarning(line.id);
         });
 
-        initDragDrop();
         updateRecap();
+        setMobileTab(mobileTab);
       }
 
       function renderLineCard(line) {
         const isExpanded = expandedIds.has(line.id);
         const { consumed, produced, hoursPerWeek } = calcLine(line);
+        const { totalCost, totalRevenue } = calcLine(line);
         const surplus = parseFloat(line.surplus) || 0;
         const hasProducedResource = (line.produces || []).length > 0;
+        const isDirty = dirtyIds.has(line.id);
 
         let resultsHtml = "";
         if (
@@ -1211,7 +1676,7 @@
               </div>`,
                   )
                   .join("")
-              : ""
+              : '<div style="font-size:12px;color:var(--text-dimmer)">—</div>'
           }
         </div>
         <div>
@@ -1223,24 +1688,32 @@
                     ([key, data]) => `
               <div class="result-item">
                 <span class="result-item-name">${escHtml(data.display)}</span>
-                <span class="result-item-val produce">${fmt(data.qty)}</span>
+                <span class="result-item-val produce">${fmt(data.qty)}${data.revenue > 0 ? ` <span style="color:var(--text-dimmer);font-size:11px">($${fmt(data.revenue)})</span>` : ""}</span>
               </div>`,
                   )
                   .join("")
-              : ""
+              : '<div style="font-size:12px;color:var(--text-dimmer)">—</div>'
           }
+          <div class="result-item" style="margin-top:8px">
+            <span class="result-item-name">${t("costWeek")}</span>
+            <span class="result-item-val" style="color:var(--red)">-$${fmt(totalCost)}</span>
+          </div>
+          <div class="result-item">
+            <span class="result-item-name">${t("revenueWeek")}</span>
+            <span class="result-item-val" style="color:var(--green)">+$${fmt(totalRevenue)}</span>
+          </div>
         </div>
       </div>
     </div>`;
         }
 
         return `
-  <div class="line-card ${isExpanded ? "expanded" : ""}" id="card-${line.id}" data-id="${line.id}">
+  <div class="line-card ${isExpanded ? "expanded" : ""}" id="card-${line.id}" data-line-id="${line.id}">
     <div class="line-card-header" onclick="toggleCard('${line.id}')">
-      <span class="drag-handle" draggable="true" data-drag-id="${line.id}" onclick="event.stopPropagation()" title="Déplacer">⠿⠿</span>
+      <button class="drag-handle" title="${t("dragHint")}" aria-label="${t("dragHint")}" onpointerdown="startLineDrag(event, '${line.id}')">⋮⋮</button>
       <span class="line-card-name">${escHtml(line.name || t("noName"))}</span>
-      ${hoursPerWeek > 0 ? `<span class="line-badge active">${fmt(hoursPerWeek)}h/week</span>` : ""}
-      ${modifiedIds.has(line.id) ? `<span class="line-badge modified">modified</span>` : ""}
+      ${isDirty ? `<span class="line-dirty-tag">${t("modified")}</span>` : ""}
+      ${hoursPerWeek > 0 ? `<span class="line-badge active">${fmt(hoursPerWeek)}${t("hoursBadge")}</span>` : ""}
       <span class="chevron">▼</span>
     </div>
     <div class="line-card-body">
@@ -1248,7 +1721,7 @@
       <div class="form-row">
         <div class="form-group full">
           <label>${t("lineName")}</label>
-          <input type="text" data-field="name" value="${escHtml(line.name || "")}" placeholder="${t("lineNamePlaceholder")}">
+          <input type="text" data-field="name" maxlength="${MAX_LINE_NAME_LENGTH}" value="${escHtml(line.name || "")}" placeholder="${t("lineNamePlaceholder")}">
         </div>
       </div>
 
@@ -1261,7 +1734,7 @@
         <div class="form-group">
           <label>${t("hoursPerWeek")}</label>
           <input type="number" data-field="hoursPerWeek" value="${line.hoursPerWeek || ""}" min="0" step="0.5" placeholder="${t("hoursPlaceholder")}">
-          <div class="total-hours-info" id="hours-info-${line.id}"></div>
+          <div class="field-warning" id="hours-info-${line.id}"></div>
         </div>
       </div>
 
@@ -1307,35 +1780,48 @@
     <div class="resource-row" data-index="0">
       <div class="autocomplete-wrapper">
         <input type="text" class="res-autocomplete" placeholder="${t("resourceName")}" value="${escHtml(r.name || "")}"
-          oninput="updateResource('${lineId}', 'produces', 0, 'name', this.value); showAutocomplete(this)"
-          onfocus="showAutocomplete(this)"
+          maxlength="${MAX_RESOURCE_NAME_LENGTH}"
+          oninput="updateResource('${lineId}', 'produces', 0, 'name', this.value); showAutocomplete(this, 'produces', '${lineId}', 0)"
+          onfocus="showAutocomplete(this, 'produces', '${lineId}', 0)"
           onblur="setTimeout(() => hideAutocomplete(this), 200)">
         <div class="autocomplete-dropdown" id="autocomplete-produces-${lineId}-0"></div>
       </div>
       <span class="res-sep">x</span>
       <input type="number" placeholder="0" value="${r.qty || ""}" min="0" step="1"
-        oninput="updateResource('${lineId}', 'produces', 0, 'qty', this.value)">
+        oninput="this.value = sanitizeWholeNumberInput(this.value); updateResource('${lineId}', 'produces', 0, 'qty', this.value)">
       <span class="res-unit">${t("perHour")}</span>
+      <span class="res-sep">@</span>
+      <input type="number" class="res-price" placeholder="$" value="${r.price || ""}" min="0" step="0.01"
+        oninput="updateResource('${lineId}', 'produces', 0, 'price', this.value)">
       <button class="btn-remove-res" onclick="removeResource('${lineId}', 'produces', 0)">x</button>
     </div>`;
       }
 
       function renderResourceRows(resources, type, lineId) {
+        const showPrice = type === "consumes";
         return resources
           .map(
             (r, i) => `
     <div class="resource-row" data-index="${i}">
       <div class="autocomplete-wrapper">
         <input type="text" class="res-autocomplete" placeholder="${t("resourceName")}" value="${escHtml(r.name || "")}"
-          oninput="updateResource('${lineId}', '${type}', ${i}, 'name', this.value); showAutocomplete(this)"
-          onfocus="showAutocomplete(this)"
+          maxlength="${MAX_RESOURCE_NAME_LENGTH}"
+          oninput="updateResource('${lineId}', '${type}', ${i}, 'name', this.value); showAutocomplete(this, '${type}', '${lineId}', ${i})"
+          onfocus="showAutocomplete(this, '${type}', '${lineId}', ${i})"
           onblur="setTimeout(() => hideAutocomplete(this), 200)">
         <div class="autocomplete-dropdown" id="autocomplete-${type}-${lineId}-${i}"></div>
       </div>
       <span class="res-sep">x</span>
       <input type="number" placeholder="0" value="${r.qty || ""}" min="0" step="1"
-        oninput="updateResource('${lineId}', '${type}', ${i}, 'qty', this.value)">
+        oninput="this.value = sanitizeWholeNumberInput(this.value); updateResource('${lineId}', '${type}', ${i}, 'qty', this.value)">
       <span class="res-unit">${t("perHour")}</span>
+      ${
+        showPrice
+          ? `<span class="res-sep">@</span>
+      <input type="number" class="res-price" placeholder="$" value="${r.price || ""}" min="0" step="0.01"
+        oninput="updateResource('${lineId}', '${type}', ${i}, 'price', this.value)">`
+          : ""
+      }
       <button class="btn-remove-res" onclick="removeResource('${lineId}', '${type}', ${i})">x</button>
     </div>`,
           )
@@ -1345,16 +1831,16 @@
       // ============================================================
       // AUTOCOMPLETE
       // ============================================================
-      function showAutocomplete(input) {
+      function showAutocomplete(input, type, lineId, index) {
         const dropdown = input.parentElement.querySelector(
           ".autocomplete-dropdown",
         );
         if (!dropdown) return;
 
         const value = input.value.toLowerCase().trim();
-        const allNames = getAllResourceNames();
+        const allNames = getAutocompleteResources(type);
         const filtered = value
-          ? allNames.filter((name) => name.toLowerCase().includes(value))
+          ? allNames.filter((item) => item.name.toLowerCase().includes(value))
           : allNames;
 
         if (filtered.length === 0) {
@@ -1364,8 +1850,8 @@
 
         dropdown.innerHTML = filtered
           .map(
-            (name) =>
-              `<div class="autocomplete-item" onmousedown="selectAutocomplete(this, '${escHtml(name)}')">${escHtml(name)}</div>`,
+            (item) =>
+              `<div class="autocomplete-item" data-name="${escHtml(item.name)}" data-price="${item.price ?? ""}" onpointerdown="selectAutocompleteByEvent(event, '${lineId}', '${type}', ${index})" onclick="selectAutocompleteByEvent(event, '${lineId}', '${type}', ${index})">${escHtml(item.name)}${item.price ? ` <span style="color:var(--text-dimmer);font-size:11px">($${fmt(item.price)})</span>` : ""}</div>`,
           )
           .join("");
         dropdown.classList.add("open");
@@ -1378,53 +1864,32 @@
         if (dropdown) dropdown.classList.remove("open");
       }
 
-      function selectAutocomplete(item, value) {
+      function selectAutocomplete(item, lineId, type, index) {
         const wrapper = item.closest(".autocomplete-wrapper");
+        if (!wrapper) return;
         const input = wrapper.querySelector("input");
-        input.value = value;
-        input.dispatchEvent(new Event("input", { bubbles: true }));
+        if (!input) return;
+        const name = item.dataset.name || "";
+        const price = item.dataset.price || "";
+        input.value = name;
+        updateResource(lineId, type, index, "name", name);
+        const row = item.closest(".resource-row");
+        const priceInput = row ? row.querySelector(".res-price") : null;
+        if (priceInput && price !== "") {
+          priceInput.value = price;
+          updateResource(lineId, type, index, "price", price);
+        }
         hideAutocomplete(input);
       }
 
-      // ============================================================
-      // VALIDATION
-      // ============================================================
-      const FIELD_RULES = {
-        daysPerWeek: { min: 0, max: 7, label: () => t("daysPerWeek") },
-        hoursPerWeek: { min: 0, max: 168, label: () => t("hoursPerWeek") },
-        surplus: { min: 0, max: 9999, label: () => t("surplus") },
-      };
-
-      function validateField(input, field) {
-        const rule = FIELD_RULES[field];
-        if (!rule || input.value === "") {
-          clearFieldError(input);
-          return true;
+      function selectAutocompleteByEvent(event, lineId, type, index) {
+        if (event) {
+          event.preventDefault();
+          event.stopPropagation();
         }
-        const val = parseFloat(input.value);
-        if (isNaN(val) || val < rule.min || val > rule.max) {
-          setFieldError(input, `Max: ${rule.max}`);
-          return false;
-        }
-        clearFieldError(input);
-        return true;
-      }
-
-      function setFieldError(input, msg) {
-        input.classList.add("input-error");
-        let err = input.parentElement.querySelector(".field-error-msg");
-        if (!err) {
-          err = document.createElement("div");
-          err.className = "field-error-msg";
-          input.parentElement.appendChild(err);
-        }
-        err.textContent = msg;
-      }
-
-      function clearFieldError(input) {
-        input.classList.remove("input-error");
-        const err = input.parentElement.querySelector(".field-error-msg");
-        if (err) err.remove();
+        const item = event?.currentTarget;
+        if (!item) return;
+        selectAutocomplete(item, lineId, type, index);
       }
 
       function bindLineEvents(id) {
@@ -1433,12 +1898,14 @@
         card.querySelectorAll("input[data-field]").forEach((input) => {
           input.addEventListener("input", () => {
             const line = lines.find((l) => l.id === id);
-            if (!line) return;
-            const field = input.dataset.field;
-            const valid = validateField(input, field);
-            if (valid) {
-              line[field] = input.value;
-              modifiedIds.add(id);
+            if (line) {
+              line[input.dataset.field] =
+                input.dataset.field === "name"
+                  ? trimLineName(input.value)
+                  : input.value;
+              if (input.dataset.field === "name") input.value = line.name;
+              markLineDirty(id, true);
+              validateLine(id);
               refreshResults(id);
             }
           });
@@ -1446,41 +1913,33 @@
       }
 
       function refreshResults(id) {
+        // Re-render just results + badge without full render
         const line = lines.find((l) => l.id === id);
         if (!line) return;
         const card = document.getElementById(`card-${id}`);
         if (!card) return;
-        const header = card.querySelector(".line-card-header");
 
-        // Update hours badge
+        // Update badge
         const { hoursPerWeek } = calcLine(line);
-        const badge = card.querySelector(".line-badge.active");
+        const badge = card.querySelector(".line-badge");
         if (hoursPerWeek > 0) {
           if (badge) {
-            badge.textContent = `${fmt(hoursPerWeek)}h/week`;
+            badge.textContent = `${fmt(hoursPerWeek)}${t("hoursBadge")}`;
+            badge.className = "line-badge active";
           } else {
-            const chevron = header.querySelector(".chevron");
+            const chevron = card.querySelector(".chevron");
             const badgeEl = document.createElement("span");
             badgeEl.className = "line-badge active";
-            badgeEl.textContent = `${fmt(hoursPerWeek)}h/week`;
-            header.insertBefore(badgeEl, chevron);
+            badgeEl.textContent = `${fmt(hoursPerWeek)}${t("hoursBadge")}`;
+            card
+              .querySelector(".line-card-header")
+              .insertBefore(badgeEl, chevron);
           }
+        } else if (badge) {
+          badge.remove();
         }
 
-        // Update modified badge
-        const existingMod = header.querySelector(".line-badge.modified");
-        if (modifiedIds.has(id)) {
-          if (!existingMod) {
-            const chevron = header.querySelector(".chevron");
-            const modEl = document.createElement("span");
-            modEl.className = "line-badge modified";
-            modEl.textContent = "modified";
-            header.insertBefore(modEl, chevron);
-          }
-        } else {
-          if (existingMod) existingMod.remove();
-        }
-
+        updateHoursWarning(line.id);
         updateRecap();
       }
 
@@ -1504,13 +1963,123 @@
       // ============================================================
       // RESOURCE MANAGEMENT
       // ============================================================
+      function clamp(value, min, max) {
+        const n = parseFloat(value);
+        if (!Number.isFinite(n)) return "";
+        return Math.min(max, Math.max(min, n));
+      }
+
+      function normalizeLine(line) {
+        const safeLine = line && typeof line === "object" ? line : {};
+        const rawConsumes = Array.isArray(safeLine.consumes)
+          ? safeLine.consumes
+          : [];
+        const rawProduces = Array.isArray(safeLine.produces)
+          ? safeLine.produces
+          : [];
+        return {
+          id: safeLine.id || uid(),
+          name: trimLineName(safeLine.name || ""),
+          daysPerWeek: safeLine.daysPerWeek ?? "",
+          hoursPerWeek: safeLine.hoursPerWeek ?? "",
+          surplus: safeLine.surplus ?? "0",
+          consumes: rawConsumes.slice(0, 200).map((r) => ({
+            name: r.name || "",
+            qty: r.qty ?? "",
+            price: r.price ?? "",
+          })),
+          produces: rawProduces.slice(0, 1).map((r) => ({
+            name: r.name || "",
+            qty: r.qty ?? "",
+            price: r.price ?? "",
+          })),
+        };
+      }
+
+      function sanitizeLine(line) {
+        line.name = trimLineName(line.name);
+        line.daysPerWeek =
+          line.daysPerWeek === "" ? "" : clamp(line.daysPerWeek, 0, 7);
+        line.hoursPerWeek =
+          line.hoursPerWeek === "" ? "" : clamp(line.hoursPerWeek, 0, 168);
+        line.surplus =
+          line.surplus === "" ? "" : Math.max(0, parseFloat(line.surplus) || 0);
+
+        const days = parseFloat(line.daysPerWeek);
+        const hours = parseFloat(line.hoursPerWeek);
+        if (Number.isFinite(days) && Number.isFinite(hours)) {
+          const maxHoursFromDays = days * 24;
+          if (hours > maxHoursFromDays) {
+            line.hoursPerWeek = maxHoursFromDays;
+          }
+        }
+
+        ["consumes", "produces"].forEach((type) => {
+          line[type] = (line[type] || []).map((r) => ({
+            name: trimResourceName((r.name || "").toString()),
+            qty:
+              r.qty === ""
+                ? ""
+                : Math.max(0, Math.floor(parseFloat(r.qty) || 0)),
+            price:
+              r.price === "" || r.price === undefined
+                ? ""
+                : Math.max(0, parseFloat(r.price) || 0),
+          }));
+        });
+        line.produces = (line.produces || []).slice(0, 1);
+      }
+
+      function validateLine(lineId) {
+        const line = lines.find((l) => l.id === lineId);
+        if (!line) return true;
+        let message = "";
+        const days = parseFloat(line.daysPerWeek);
+        const hours = parseFloat(line.hoursPerWeek);
+        const surplus = parseFloat(line.surplus);
+
+        if (
+          line.daysPerWeek !== "" &&
+          (!Number.isFinite(days) || days < 0 || days > 7)
+        ) {
+          message = t("invalidDaysRange");
+        } else if (
+          line.hoursPerWeek !== "" &&
+          (!Number.isFinite(hours) || hours < 0 || hours > 168)
+        ) {
+          message = t("invalidHoursRange");
+        } else if (
+          Number.isFinite(days) &&
+          Number.isFinite(hours) &&
+          hours > days * 24
+        ) {
+          message = t("invalidHoursVsDays");
+        } else if (
+          line.surplus !== "" &&
+          (!Number.isFinite(surplus) || surplus < 0)
+        ) {
+          message = t("invalidSurplus");
+        }
+
+        updateHoursWarning(lineId, message);
+        return !message;
+      }
+
+      function updateHoursWarning(lineId, forcedMessage = "") {
+        const el = document.getElementById(`hours-info-${lineId}`);
+        if (!el) return;
+        el.textContent = forcedMessage;
+      }
+
       function updateResource(lineId, type, index, field, value) {
         const line = lines.find((l) => l.id === lineId);
         if (!line) return;
         if (!line[type]) line[type] = [];
         if (!line[type][index]) line[type][index] = {};
+        if (field === "name") value = trimResourceName(value);
         line[type][index][field] = value;
-        modifiedIds.add(lineId);
+        markLineDirty(lineId, true);
+        sanitizeLine(line);
         refreshResults(lineId);
       }
 
@@ -1520,7 +2089,8 @@
         if (!line[type]) line[type] = [];
         // For produces, only allow 1 resource
         if (type === "produces" && line[type].length >= 1) return;
-        line[type].push({ name: "", qty: "" });
+        line[type].push({ name: "", qty: "", price: "" });
+        markLineDirty(lineId, true);
         // Re-render the card to update the button visibility for produces
         if (type === "produces") {
           renderAll();
@@ -1536,6 +2106,7 @@
         const line = lines.find((l) => l.id === lineId);
         if (!line || !line[type]) return;
         line[type].splice(index, 1);
+        markLineDirty(lineId, true);
         // Re-render the card to update the button visibility for produces
         if (type === "produces") {
           renderAll();
@@ -1558,11 +2129,15 @@
         if (!line) return;
         // Sync name from input
         const nameInput = card.querySelector('input[data-field="name"]');
-        if (nameInput) line.name = nameInput.value;
+        if (nameInput) line.name = trimLineName(nameInput.value);
+        if (!validateLine(id)) {
+          showToast(t("fixInputsFirst"));
+          return;
+        }
+        sanitizeLine(line);
         saveLines(lines);
-        modifiedIds.delete(id);
+        markLineDirty(id, false);
         showToast(t("lineSaved"));
-        renderAll();
         expandedIds.add(id);
         renderAll();
       }
@@ -1571,6 +2146,7 @@
         if (!confirm(t("deleteConfirm"))) return;
         lines = lines.filter((l) => l.id !== id);
         expandedIds.delete(id);
+        dirtyIds.delete(id);
         saveLines(lines);
         renderAll();
         showToast(t("lineDeleted"));
@@ -1590,6 +2166,7 @@
           produces: JSON.parse(JSON.stringify(original.produces || [])),
         };
 
+        sanitizeLine(duplicate);
         lines.push(duplicate);
         expandedIds.add(duplicate.id);
         saveLines(lines);
@@ -1607,6 +2184,7 @@
       // ============================================================
       function openNewLineModal() {
         document.getElementById("new-line-name").value = "";
+        populateRecipeOptions();
         document.getElementById("modal-new").classList.add("open");
         setTimeout(() => document.getElementById("new-line-name").focus(), 50);
       }
@@ -1615,10 +2193,56 @@
         document.getElementById("modal-new").classList.remove("open");
       }
 
+      function populateRecipeOptions() {
+        const select = document.getElementById("new-line-recipe");
+        if (!select) return;
+        const options = RECIPE_DB.slice().sort((a, b) => {
+          const aName = localizeName(a.produced.names);
+          const bName = localizeName(b.produced.names);
+          return aName.localeCompare(bName);
+        });
+        if (options.length === 0) {
+          select.innerHTML = `<option value="" selected>${t("noRecipe")}</option>`;
+          return;
+        }
+        select.innerHTML =
+          `<option value="" selected>${t("none")}</option>` +
+          options
+            .map((recipe) => {
+              const label = localizeName(recipe.produced.names);
+              const consumedCount = recipe.consumes.length;
+              const suffix = consumedCount > 0 ? ` (${consumedCount})` : "";
+              return `<option value="${recipe.id}">${escHtml(label)}${suffix}</option>`;
+            })
+            .join("");
+      }
+
+      function applyRecipeToLine(line, recipeId) {
+        const recipe = RECIPE_DB.find((r) => r.id === recipeId);
+        if (!recipe) return;
+        const localizedProduced = localizeName(recipe.produced.names);
+        if (!line.name || line.name === t("newLineTitle")) {
+          line.name = trimLineName(localizedProduced);
+        }
+        line.consumes = recipe.consumes.map((r) => ({
+          name: trimResourceName(localizeName(r.names)),
+          qty: r.qty || "",
+          price: r.price === undefined ? "" : r.price,
+        }));
+        line.produces = [
+          {
+            name: trimResourceName(localizedProduced),
+            qty: recipe.produced.qty || 1,
+            price: "",
+          },
+        ];
+      }
+
       function createLine() {
         const name =
-          document.getElementById("new-line-name").value.trim() ||
+          trimLineName(document.getElementById("new-line-name").value.trim()) ||
           t("newLineTitle");
+        const recipeId = document.getElementById("new-line-recipe").value;
         const line = {
           id: uid(),
           name,
@@ -1628,6 +2252,9 @@
           consumes: [],
           produces: [],
         };
+        if (recipeId) {
+          applyRecipeToLine(line, recipeId);
+        }
         lines.push(line);
         expandedIds.add(line.id);
         saveLines(lines);
@@ -1647,18 +2274,109 @@
           if (e.key === "Enter") createLine();
           if (e.key === "Escape") closeNewLineModal();
         });
+      document
+        .getElementById("new-line-name")
+        .setAttribute("maxlength", String(MAX_LINE_NAME_LENGTH));
 
       document.getElementById("modal-new").addEventListener("click", (e) => {
         if (e.target === document.getElementById("modal-new"))
           closeNewLineModal();
       });
 
+      window.addEventListener("beforeunload", (e) => {
+        if (dirtyIds.size > 0) {
+          e.preventDefault();
+          e.returnValue = t("unsavedChanges");
+        }
+      });
+      window.addEventListener("resize", () => setMobileTab(mobileTab));
+
+      // ============================================================
+      // DRAG AND DROP (PC + MOBILE)
+      // ============================================================
+      let dragState = null;
+
+      function startLineDrag(event, lineId) {
+        if (event.button !== undefined && event.button !== 0) return;
+        event.preventDefault();
+        event.stopPropagation();
+
+        const card = document.getElementById(`card-${lineId}`);
+        const list = document.getElementById("lines-list");
+        if (!card || !list) return;
+
+        dragState = { lineId };
+        card.classList.add("dragging");
+        list.classList.add("dragging-active");
+        try {
+          event.target.setPointerCapture(event.pointerId);
+        } catch {}
+
+        document.addEventListener("pointermove", onLineDragMove);
+        document.addEventListener("pointerup", endLineDrag);
+        document.addEventListener("pointercancel", endLineDrag);
+      }
+
+      function onLineDragMove(event) {
+        if (!dragState) return;
+        const list = document.getElementById("lines-list");
+        const draggingEl = document.getElementById(`card-${dragState.lineId}`);
+        if (!list || !draggingEl) return;
+
+        const element = document.elementFromPoint(event.clientX, event.clientY);
+        const targetCard = element ? element.closest(".line-card") : null;
+        if (!targetCard || targetCard.id === draggingEl.id) return;
+
+        const targetRect = targetCard.getBoundingClientRect();
+        const shouldInsertAfter =
+          event.clientY > targetRect.top + targetRect.height / 2;
+        if (shouldInsertAfter) {
+          list.insertBefore(draggingEl, targetCard.nextSibling);
+        } else {
+          list.insertBefore(draggingEl, targetCard);
+        }
+      }
+
+      function endLineDrag() {
+        if (!dragState) return;
+
+        const list = document.getElementById("lines-list");
+        const draggingEl = document.getElementById(`card-${dragState.lineId}`);
+        if (draggingEl) draggingEl.classList.remove("dragging");
+        if (list) list.classList.remove("dragging-active");
+
+        if (list) {
+          const orderedIds = Array.from(
+            list.querySelectorAll(".line-card"),
+          ).map((el) => el.dataset.lineId);
+          const orderIndex = new Map(
+            orderedIds.map((id, index) => [id, index]),
+          );
+          lines.sort(
+            (a, b) => (orderIndex.get(a.id) ?? 0) - (orderIndex.get(b.id) ?? 0),
+          );
+          saveLines(lines);
+          renderAll();
+        }
+
+        dragState = null;
+        document.removeEventListener("pointermove", onLineDragMove);
+        document.removeEventListener("pointerup", endLineDrag);
+        document.removeEventListener("pointercancel", endLineDrag);
+      }
+
       // ============================================================
       // INIT
       // ============================================================
-      updateLangButtons();
-      applyTranslations();
-      renderAll();
+      async function initApp() {
+        lines = (lines || []).map(normalizeLine);
+        await loadResourceDb();
+        updateLangButtons();
+        applyTranslations();
+        renderAll();
+      }
+
+      initApp();
     </script>
   </body>
 </html>

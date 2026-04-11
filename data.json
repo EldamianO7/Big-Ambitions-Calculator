@@ -1,0 +1,2038 @@
+{
+  "consumed": [
+    {
+      "id": 1,
+      "names": {
+        "en": "Bag of Lettuce",
+        "fr": "Sac de laitue"
+      },
+      "price": 0
+    },
+    {
+      "id": 2,
+      "names": {
+        "en": "Bag of Tomatoes",
+        "fr": "Sac de tomates"
+      },
+      "price": 0
+    },
+    {
+      "id": 3,
+      "names": {
+        "en": "Baking Mix",
+        "fr": "Mélange à pâtisserie"
+      },
+      "price": 0
+    },
+    {
+      "id": 4,
+      "names": {
+        "en": "Barley",
+        "fr": "Orge"
+      },
+      "price": 0
+    },
+    {
+      "id": 5,
+      "names": {
+        "en": "Battery",
+        "fr": "Pile"
+      },
+      "price": 0
+    },
+    {
+      "id": 6,
+      "names": {
+        "en": "Blue Agave",
+        "fr": "Agave bleu"
+      },
+      "price": 0
+    },
+    {
+      "id": 7,
+      "names": {
+        "en": "Butter",
+        "fr": "Beurre"
+      },
+      "price": 0
+    },
+    {
+      "id": 8,
+      "names": {
+        "en": "Caffeine Extract",
+        "fr": "Extrait de caféine"
+      },
+      "price": 0
+    },
+    {
+      "id": 9,
+      "names": {
+        "en": "Capacitors",
+        "fr": "Condensateurs"
+      },
+      "price": 0
+    },
+    {
+      "id": 10,
+      "names": {
+        "en": "Carbon Dioxide",
+        "fr": "Dioxyde de carbone"
+      },
+      "price": 0
+    },
+    {
+      "id": 11,
+      "names": {
+        "en": "Cheese",
+        "fr": "Fromage"
+      },
+      "price": 0
+    },
+    {
+      "id": 12,
+      "names": {
+        "en": "Chicken Breast",
+        "fr": "Blanc de poulet"
+      },
+      "price": 0
+    },
+    {
+      "id": 13,
+      "names": {
+        "en": "Cigar Paper",
+        "fr": "Papier à cigare"
+      },
+      "price": 0
+    },
+    {
+      "id": 14,
+      "names": {
+        "en": "Cigarette Paper",
+        "fr": "Papier à cigarette"
+      },
+      "price": 0
+    },
+    {
+      "id": 15,
+      "names": {
+        "en": "Clay",
+        "fr": "Argile"
+      },
+      "price": 0
+    },
+    {
+      "id": 16,
+      "names": {
+        "en": "Cola Flavoring",
+        "fr": "Arôme cola"
+      },
+      "price": 0
+    },
+    {
+      "id": 17,
+      "names": {
+        "en": "Copper Clad Laminate",
+        "fr": "Stratifié cuivré"
+      },
+      "price": 0
+    },
+    {
+      "id": 18,
+      "names": {
+        "en": "Dough",
+        "fr": "Pâte"
+      },
+      "price": 0
+    },
+    {
+      "id": 19,
+      "names": {
+        "en": "Fabric (Cheap)",
+        "fr": "Tissu (bon marché)"
+      },
+      "price": 0
+    },
+    {
+      "id": 20,
+      "names": {
+        "en": "Fabric (Expensive)",
+        "fr": "Tissu (cher)"
+      },
+      "price": 0
+    },
+    {
+      "id": 21,
+      "names": {
+        "en": "Flavor Syrup",
+        "fr": "Sirop aromatisé"
+      },
+      "price": 0
+    },
+    {
+      "id": 22,
+      "names": {
+        "en": "Glass",
+        "fr": "Verre"
+      },
+      "price": 0
+    },
+    {
+      "id": 23,
+      "names": {
+        "en": "Grapes",
+        "fr": "Raisins"
+      },
+      "price": 0
+    },
+    {
+      "id": 24,
+      "names": {
+        "en": "Ground Beef",
+        "fr": "Bœuf haché"
+      },
+      "price": 0
+    },
+    {
+      "id": 25,
+      "names": {
+        "en": "Ground Coffee Beans",
+        "fr": "Café moulu"
+      },
+      "price": 0
+    },
+    {
+      "id": 26,
+      "names": {
+        "en": "Hair Care Formula",
+        "fr": "Formule soins capillaires"
+      },
+      "price": 0
+    },
+    {
+      "id": 27,
+      "names": {
+        "en": "Hops",
+        "fr": "Houblon"
+      },
+      "price": 0
+    },
+    {
+      "id": 28,
+      "names": {
+        "en": "Integrated Circuits",
+        "fr": "Circuits intégrés"
+      },
+      "price": 0
+    },
+    {
+      "id": 29,
+      "names": {
+        "en": "Juniper Berries",
+        "fr": "Baies de genièvre"
+      },
+      "price": 0
+    },
+    {
+      "id": 30,
+      "names": {
+        "en": "Lime Juice",
+        "fr": "Jus de citron vert"
+      },
+      "price": 0
+    },
+    {
+      "id": 31,
+      "names": {
+        "en": "Metal Band",
+        "fr": "Bracelet métallique"
+      },
+      "price": 0
+    },
+    {
+      "id": 32,
+      "names": {
+        "en": "Metal Wire",
+        "fr": "Fil métallique"
+      },
+      "price": 0
+    },
+    {
+      "id": 33,
+      "names": {
+        "en": "Microphone",
+        "fr": "Microphone"
+      },
+      "price": 0
+    },
+    {
+      "id": 34,
+      "names": {
+        "en": "Milk",
+        "fr": "Lait"
+      },
+      "price": 0
+    },
+    {
+      "id": 35,
+      "names": {
+        "en": "Onion",
+        "fr": "Oignon"
+      },
+      "price": 0
+    },
+    {
+      "id": 36,
+      "names": {
+        "en": "Paper Ream",
+        "fr": "Rame de papier"
+      },
+      "price": 0
+    },
+    {
+      "id": 37,
+      "names": {
+        "en": "Pepper",
+        "fr": "Poivre"
+      },
+      "price": 0
+    },
+    {
+      "id": 38,
+      "names": {
+        "en": "Plastic",
+        "fr": "Plastique"
+      },
+      "price": 0
+    },
+    {
+      "id": 39,
+      "names": {
+        "en": "Popcorn Kernels",
+        "fr": "Grains de maïs soufflé"
+      },
+      "price": 0
+    },
+    {
+      "id": 40,
+      "names": {
+        "en": "Raw Sausage",
+        "fr": "Saucisse crue"
+      },
+      "price": 0
+    },
+    {
+      "id": 41,
+      "names": {
+        "en": "Resistors",
+        "fr": "Résistances"
+      },
+      "price": 0
+    },
+    {
+      "id": 42,
+      "names": {
+        "en": "Russet Potatoes",
+        "fr": "Pommes de terre russet"
+      },
+      "price": 0
+    },
+    {
+      "id": 43,
+      "names": {
+        "en": "Seeds (Apple)",
+        "fr": "Graines (pomme)"
+      },
+      "price": 0
+    },
+    {
+      "id": 44,
+      "names": {
+        "en": "Seeds (Banana)",
+        "fr": "Graines (banane)"
+      },
+      "price": 0
+    },
+    {
+      "id": 45,
+      "names": {
+        "en": "Seeds (carrots)",
+        "fr": "Graines (carottes)"
+      },
+      "price": 0
+    },
+    {
+      "id": 46,
+      "names": {
+        "en": "Seeds (flower cheap)",
+        "fr": "Graines (fleur bon marché)"
+      },
+      "price": 0
+    },
+    {
+      "id": 47,
+      "names": {
+        "en": "Seeds (flower expensive)",
+        "fr": "Graines (fleur chère)"
+      },
+      "price": 0
+    },
+    {
+      "id": 48,
+      "names": {
+        "en": "Seeds (lettuce)",
+        "fr": "Graines (laitue)"
+      },
+      "price": 0
+    },
+    {
+      "id": 49,
+      "names": {
+        "en": "Seeds (pears)",
+        "fr": "Graines (poires)"
+      },
+      "price": 0
+    },
+    {
+      "id": 50,
+      "names": {
+        "en": "Seeds (tomatoes)",
+        "fr": "Graines (tomates)"
+      },
+      "price": 0
+    },
+    {
+      "id": 51,
+      "names": {
+        "en": "Speaker",
+        "fr": "Haut-parleur"
+      },
+      "price": 0
+    },
+    {
+      "id": 52,
+      "names": {
+        "en": "Sugar",
+        "fr": "Sucre"
+      },
+      "price": 0
+    },
+    {
+      "id": 53,
+      "names": {
+        "en": "Tea Leaves",
+        "fr": "Feuilles de thé"
+      },
+      "price": 0
+    },
+    {
+      "id": 54,
+      "names": {
+        "en": "Tobacco",
+        "fr": "Tabac"
+      },
+      "price": 0
+    },
+    {
+      "id": 55,
+      "names": {
+        "en": "Transistors",
+        "fr": "Transistors"
+      },
+      "price": 0
+    },
+    {
+      "id": 56,
+      "names": {
+        "en": "Uncut Gems (Cheap)",
+        "fr": "Pierres brutes (bon marché)"
+      },
+      "price": 0
+    },
+    {
+      "id": 57,
+      "names": {
+        "en": "Uncut Gems (Expensive)",
+        "fr": "Pierres brutes (chères)"
+      },
+      "price": 0
+    },
+    {
+      "id": 58,
+      "names": {
+        "en": "Vermouth",
+        "fr": "Vermouth"
+      },
+      "price": 0
+    },
+    {
+      "id": 59,
+      "names": {
+        "en": "Vinaigrette",
+        "fr": "Vinaigrette"
+      },
+      "price": 0
+    },
+    {
+      "id": 60,
+      "names": {
+        "en": "Water",
+        "fr": "Eau"
+      },
+      "price": 0
+    },
+    {
+      "id": 61,
+      "names": {
+        "en": "Yeast",
+        "fr": "Levure"
+      },
+      "price": 0
+    }
+  ],
+  "produced": [
+    {
+      "id": 1,
+      "names": {
+        "en": "Burger",
+        "fr": "Burger"
+      }
+    },
+    {
+      "id": 2,
+      "names": {
+        "en": "Cheese platter",
+        "fr": "Plateau de fromages"
+      }
+    },
+    {
+      "id": 3,
+      "names": {
+        "en": "Chicken kabob skewer",
+        "fr": "Brochette de poulet"
+      }
+    },
+    {
+      "id": 4,
+      "names": {
+        "en": "Cotton candy",
+        "fr": "Barbe à papa"
+      }
+    },
+    {
+      "id": 5,
+      "names": {
+        "en": "Croissant",
+        "fr": "Croissant"
+      }
+    },
+    {
+      "id": 6,
+      "names": {
+        "en": "Cupcake",
+        "fr": "Cupcake"
+      }
+    },
+    {
+      "id": 7,
+      "names": {
+        "en": "Donut",
+        "fr": "Beignet"
+      }
+    },
+    {
+      "id": 8,
+      "names": {
+        "en": "French Fries",
+        "fr": "Frites"
+      }
+    },
+    {
+      "id": 9,
+      "names": {
+        "en": "Fresh Food",
+        "fr": "Nourriture fraîche"
+      }
+    },
+    {
+      "id": 10,
+      "names": {
+        "en": "Frozen Food",
+        "fr": "Nourriture surgelée"
+      }
+    },
+    {
+      "id": 11,
+      "names": {
+        "en": "Hotdog",
+        "fr": "Hot-dog"
+      }
+    },
+    {
+      "id": 12,
+      "names": {
+        "en": "Ice Cream",
+        "fr": "Glace"
+      }
+    },
+    {
+      "id": 13,
+      "names": {
+        "en": "Pizza",
+        "fr": "Pizza"
+      }
+    },
+    {
+      "id": 14,
+      "names": {
+        "en": "Popcorn",
+        "fr": "Pop-corn"
+      }
+    },
+    {
+      "id": 15,
+      "names": {
+        "en": "Salad",
+        "fr": "Salade"
+      }
+    },
+    {
+      "id": 16,
+      "names": {
+        "en": "Beer",
+        "fr": "Bière"
+      }
+    },
+    {
+      "id": 17,
+      "names": {
+        "en": "Wine",
+        "fr": "Vin"
+      }
+    },
+    {
+      "id": 18,
+      "names": {
+        "en": "Coffee",
+        "fr": "Café"
+      }
+    },
+    {
+      "id": 19,
+      "names": {
+        "en": "Tea",
+        "fr": "Thé"
+      }
+    },
+    {
+      "id": 20,
+      "names": {
+        "en": "Energy Drink",
+        "fr": "Boisson énergisante"
+      }
+    },
+    {
+      "id": 21,
+      "names": {
+        "en": "Hair care",
+        "fr": "Soins capillaires"
+      }
+    },
+    {
+      "id": 22,
+      "names": {
+        "en": "Margarita",
+        "fr": "Margarita"
+      }
+    },
+    {
+      "id": 23,
+      "names": {
+        "en": "Martini",
+        "fr": "Martini"
+      }
+    },
+    {
+      "id": 24,
+      "names": {
+        "en": "Slushie",
+        "fr": "Granité"
+      }
+    },
+    {
+      "id": 25,
+      "names": {
+        "en": "Soda",
+        "fr": "Soda"
+      }
+    },
+    {
+      "id": 26,
+      "names": {
+        "en": "Whisky",
+        "fr": "Whisky"
+      }
+    },
+    {
+      "id": 27,
+      "names": {
+        "en": "Bag of apples",
+        "fr": "Sac de pommes"
+      }
+    },
+    {
+      "id": 28,
+      "names": {
+        "en": "Bag of bananas",
+        "fr": "Sac de bananes"
+      }
+    },
+    {
+      "id": 29,
+      "names": {
+        "en": "Bag of carrots",
+        "fr": "Sac de carottes"
+      }
+    },
+    {
+      "id": 30,
+      "names": {
+        "en": "Bag of lettuce",
+        "fr": "Sac de laitue"
+      }
+    },
+    {
+      "id": 31,
+      "names": {
+        "en": "Bag of pears",
+        "fr": "Sac de poires"
+      }
+    },
+    {
+      "id": 32,
+      "names": {
+        "en": "Bag of tomatoes",
+        "fr": "Sac de tomates"
+      }
+    },
+    {
+      "id": 33,
+      "names": {
+        "en": "Flower (cheap)",
+        "fr": "Fleur (bon marché)"
+      }
+    },
+    {
+      "id": 34,
+      "names": {
+        "en": "Flower (expensive)",
+        "fr": "Fleur (chère)"
+      }
+    },
+    {
+      "id": 35,
+      "names": {
+        "en": "Cigar",
+        "fr": "Cigare"
+      }
+    },
+    {
+      "id": 36,
+      "names": {
+        "en": "Pack of cigarettes",
+        "fr": "Paquet de cigarettes"
+      }
+    },
+    {
+      "id": 37,
+      "names": {
+        "en": "Gift (cheap)",
+        "fr": "Cadeau (bon marché)"
+      }
+    },
+    {
+      "id": 38,
+      "names": {
+        "en": "Gift (expensive)",
+        "fr": "Cadeau (cher)"
+      }
+    },
+    {
+      "id": 39,
+      "names": {
+        "en": "Limited Edition Book",
+        "fr": "Livre édition limitée"
+      }
+    },
+    {
+      "id": 40,
+      "names": {
+        "en": "Motivational Book",
+        "fr": "Livre de développement personnel"
+      }
+    },
+    {
+      "id": 41,
+      "names": {
+        "en": "Novel",
+        "fr": "Roman"
+      }
+    },
+    {
+      "id": 42,
+      "names": {
+        "en": "Paper bag",
+        "fr": "Sac en papier"
+      }
+    },
+    {
+      "id": 43,
+      "names": {
+        "en": "Picture book",
+        "fr": "Album illustré"
+      }
+    },
+    {
+      "id": 44,
+      "names": {
+        "en": "Technical manual",
+        "fr": "Manuel technique"
+      }
+    },
+    {
+      "id": 45,
+      "names": {
+        "en": "Umbrella",
+        "fr": "Parapluie"
+      }
+    },
+    {
+      "id": 46,
+      "names": {
+        "en": "Youth novel",
+        "fr": "Roman jeunesse"
+      }
+    },
+    {
+      "id": 47,
+      "names": {
+        "en": "Clothing (Classic Cheap Female)",
+        "fr": "Vêtement (classique bon marché femme)"
+      }
+    },
+    {
+      "id": 48,
+      "names": {
+        "en": "Clothing (Classic Cheap Male)",
+        "fr": "Vêtement (classique bon marché homme)"
+      }
+    },
+    {
+      "id": 49,
+      "names": {
+        "en": "Clothing (Classic Expensive Female)",
+        "fr": "Vêtement (classique cher femme)"
+      }
+    },
+    {
+      "id": 50,
+      "names": {
+        "en": "Clothing (Classic Expensive Male)",
+        "fr": "Vêtement (classique cher homme)"
+      }
+    },
+    {
+      "id": 51,
+      "names": {
+        "en": "Clothing (Modern Cheap Female)",
+        "fr": "Vêtement (moderne bon marché femme)"
+      }
+    },
+    {
+      "id": 52,
+      "names": {
+        "en": "Clothing (Modern Cheap Male)",
+        "fr": "Vêtement (moderne bon marché homme)"
+      }
+    },
+    {
+      "id": 53,
+      "names": {
+        "en": "Clothing (Modern Expensive Female)",
+        "fr": "Vêtement (moderne cher femme)"
+      }
+    },
+    {
+      "id": 54,
+      "names": {
+        "en": "Clothing (Modern Expensive Male)",
+        "fr": "Vêtement (moderne cher homme)"
+      }
+    },
+    {
+      "id": 55,
+      "names": {
+        "en": "Jewelry (Cheap)",
+        "fr": "Bijou (bon marché)"
+      }
+    },
+    {
+      "id": 56,
+      "names": {
+        "en": "Jewelry (Expensive)",
+        "fr": "Bijou (cher)"
+      }
+    },
+    {
+      "id": 57,
+      "names": {
+        "en": "Arty Fish Phone",
+        "fr": "Téléphone Arty Fish"
+      }
+    },
+    {
+      "id": 58,
+      "names": {
+        "en": "Arty Fish Smartwatch",
+        "fr": "Montre connectée Arty Fish"
+      }
+    },
+    {
+      "id": 59,
+      "names": {
+        "en": "Noize Boss Earbuds",
+        "fr": "Noize Boss Earbuds"
+      }
+    },
+    {
+      "id": 60,
+      "names": {
+        "en": "Rhythm By Tre",
+        "fr": "Rhythm By Tre"
+      }
+    },
+    {
+      "id": 61,
+      "names": {
+        "en": "ZanaMan Phone",
+        "fr": "Téléphone ZanaMan"
+      }
+    },
+    {
+      "id": 62,
+      "names": {
+        "en": "ZanaMan Smartwatch",
+        "fr": "Montre connectée ZanaMan"
+      }
+    }
+  ],
+  "recipes": [
+    {
+      "producedId": 1,
+      "producedQty": 200,
+      "consumes": [
+        {
+          "productId": 11,
+          "qty": 40
+        },
+        {
+          "productId": 18,
+          "qty": 200
+        },
+        {
+          "productId": 24,
+          "qty": 200
+        }
+      ]
+    },
+    {
+      "producedId": 2,
+      "producedQty": 200,
+      "consumes": [
+        {
+          "productId": 11,
+          "qty": 40
+        }
+      ]
+    },
+    {
+      "producedId": 3,
+      "producedQty": 200,
+      "consumes": [
+        {
+          "productId": 12,
+          "qty": 200
+        },
+        {
+          "productId": 35,
+          "qty": 100
+        },
+        {
+          "productId": 37,
+          "qty": 100
+        },
+        {
+          "productId": 59,
+          "qty": 100
+        }
+      ]
+    },
+    {
+      "producedId": 4,
+      "producedQty": 200,
+      "consumes": [
+        {
+          "productId": 52,
+          "qty": 200
+        }
+      ]
+    },
+    {
+      "producedId": 5,
+      "producedQty": 200,
+      "consumes": [
+        {
+          "productId": 7,
+          "qty": 100
+        },
+        {
+          "productId": 18,
+          "qty": 200
+        }
+      ]
+    },
+    {
+      "producedId": 6,
+      "producedQty": 200,
+      "consumes": [
+        {
+          "productId": 3,
+          "qty": 200
+        },
+        {
+          "productId": 34,
+          "qty": 100
+        },
+        {
+          "productId": 52,
+          "qty": 100
+        }
+      ]
+    },
+    {
+      "producedId": 7,
+      "producedQty": 200,
+      "consumes": [
+        {
+          "productId": 18,
+          "qty": 200
+        },
+        {
+          "productId": 34,
+          "qty": 100
+        },
+        {
+          "productId": 52,
+          "qty": 100
+        }
+      ]
+    },
+    {
+      "producedId": 8,
+      "producedQty": 200,
+      "consumes": [
+        {
+          "productId": 42,
+          "qty": 200
+        },
+        {
+          "productId": 2,
+          "qty": 50
+        }
+      ]
+    },
+    {
+      "producedId": 9,
+      "producedQty": 200,
+      "consumes": [
+        {
+          "productId": 2,
+          "qty": 100
+        },
+        {
+          "productId": 24,
+          "qty": 200
+        },
+        {
+          "productId": 42,
+          "qty": 200
+        }
+      ]
+    },
+    {
+      "producedId": 10,
+      "producedQty": 200,
+      "consumes": [
+        {
+          "productId": 12,
+          "qty": 200
+        },
+        {
+          "productId": 59,
+          "qty": 100
+        }
+      ]
+    },
+    {
+      "producedId": 11,
+      "producedQty": 200,
+      "consumes": [
+        {
+          "productId": 18,
+          "qty": 200
+        },
+        {
+          "productId": 40,
+          "qty": 200
+        },
+        {
+          "productId": 2,
+          "qty": 50
+        }
+      ]
+    },
+    {
+      "producedId": 12,
+      "producedQty": 200,
+      "consumes": [
+        {
+          "productId": 34,
+          "qty": 200
+        },
+        {
+          "productId": 52,
+          "qty": 200
+        }
+      ]
+    },
+    {
+      "producedId": 13,
+      "producedQty": 200,
+      "consumes": [
+        {
+          "productId": 18,
+          "qty": 200
+        },
+        {
+          "productId": 11,
+          "qty": 200
+        },
+        {
+          "productId": 2,
+          "qty": 100
+        }
+      ]
+    },
+    {
+      "producedId": 14,
+      "producedQty": 200,
+      "consumes": [
+        {
+          "productId": 39,
+          "qty": 200
+        },
+        {
+          "productId": 7,
+          "qty": 10
+        }
+      ]
+    },
+    {
+      "producedId": 15,
+      "producedQty": 200,
+      "consumes": [
+        {
+          "productId": 1,
+          "qty": 200
+        },
+        {
+          "productId": 35,
+          "qty": 100
+        },
+        {
+          "productId": 37,
+          "qty": 100
+        },
+        {
+          "productId": 2,
+          "qty": 100
+        },
+        {
+          "productId": 59,
+          "qty": 100
+        }
+      ]
+    },
+    {
+      "producedId": 16,
+      "producedQty": 50,
+      "consumes": [
+        {
+          "productId": 4,
+          "qty": 50
+        },
+        {
+          "productId": 10,
+          "qty": 50
+        },
+        {
+          "productId": 27,
+          "qty": 50
+        },
+        {
+          "productId": 60,
+          "qty": 50
+        },
+        {
+          "productId": 61,
+          "qty": 50
+        }
+      ]
+    },
+    {
+      "producedId": 17,
+      "producedQty": 50,
+      "consumes": [
+        {
+          "productId": 23,
+          "qty": 100
+        },
+        {
+          "productId": 52,
+          "qty": 50
+        },
+        {
+          "productId": 61,
+          "qty": 50
+        }
+      ]
+    },
+    {
+      "producedId": 18,
+      "producedQty": 250,
+      "consumes": [
+        {
+          "productId": 25,
+          "qty": 250
+        },
+        {
+          "productId": 60,
+          "qty": 250
+        }
+      ]
+    },
+    {
+      "producedId": 19,
+      "producedQty": 250,
+      "consumes": [
+        {
+          "productId": 53,
+          "qty": 250
+        },
+        {
+          "productId": 60,
+          "qty": 250
+        }
+      ]
+    },
+    {
+      "producedId": 20,
+      "producedQty": 250,
+      "consumes": [
+        {
+          "productId": 8,
+          "qty": 250
+        },
+        {
+          "productId": 10,
+          "qty": 250
+        },
+        {
+          "productId": 52,
+          "qty": 250
+        },
+        {
+          "productId": 60,
+          "qty": 250
+        }
+      ]
+    },
+    {
+      "producedId": 21,
+      "producedQty": 150,
+      "consumes": [
+        {
+          "productId": 26,
+          "qty": 150
+        },
+        {
+          "productId": 60,
+          "qty": 150
+        }
+      ]
+    },
+    {
+      "producedId": 22,
+      "producedQty": 50,
+      "consumes": [
+        {
+          "productId": 4,
+          "qty": 50
+        },
+        {
+          "productId": 6,
+          "qty": 100
+        },
+        {
+          "productId": 30,
+          "qty": 50
+        },
+        {
+          "productId": 60,
+          "qty": 50
+        },
+        {
+          "productId": 61,
+          "qty": 50
+        }
+      ]
+    },
+    {
+      "producedId": 23,
+      "producedQty": 50,
+      "consumes": [
+        {
+          "productId": 4,
+          "qty": 50
+        },
+        {
+          "productId": 29,
+          "qty": 100
+        },
+        {
+          "productId": 58,
+          "qty": 50
+        },
+        {
+          "productId": 60,
+          "qty": 50
+        },
+        {
+          "productId": 61,
+          "qty": 50
+        }
+      ]
+    },
+    {
+      "producedId": 24,
+      "producedQty": 250,
+      "consumes": [
+        {
+          "productId": 21,
+          "qty": 250
+        },
+        {
+          "productId": 52,
+          "qty": 250
+        },
+        {
+          "productId": 60,
+          "qty": 250
+        }
+      ]
+    },
+    {
+      "producedId": 25,
+      "producedQty": 250,
+      "consumes": [
+        {
+          "productId": 10,
+          "qty": 250
+        },
+        {
+          "productId": 16,
+          "qty": 250
+        },
+        {
+          "productId": 52,
+          "qty": 250
+        },
+        {
+          "productId": 60,
+          "qty": 250
+        }
+      ]
+    },
+    {
+      "producedId": 26,
+      "producedQty": 50,
+      "consumes": [
+        {
+          "productId": 4,
+          "qty": 100
+        },
+        {
+          "productId": 60,
+          "qty": 50
+        },
+        {
+          "productId": 61,
+          "qty": 50
+        }
+      ]
+    },
+    {
+      "producedId": 27,
+      "producedQty": 250,
+      "consumes": [
+        {
+          "productId": 43,
+          "qty": 50
+        },
+        {
+          "productId": 60,
+          "qty": 50
+        }
+      ]
+    },
+    {
+      "producedId": 28,
+      "producedQty": 250,
+      "consumes": [
+        {
+          "productId": 44,
+          "qty": 50
+        },
+        {
+          "productId": 60,
+          "qty": 50
+        }
+      ]
+    },
+    {
+      "producedId": 29,
+      "producedQty": 250,
+      "consumes": [
+        {
+          "productId": 45,
+          "qty": 50
+        },
+        {
+          "productId": 60,
+          "qty": 50
+        }
+      ]
+    },
+    {
+      "producedId": 30,
+      "producedQty": 250,
+      "consumes": [
+        {
+          "productId": 48,
+          "qty": 50
+        },
+        {
+          "productId": 60,
+          "qty": 50
+        }
+      ]
+    },
+    {
+      "producedId": 31,
+      "producedQty": 250,
+      "consumes": [
+        {
+          "productId": 49,
+          "qty": 50
+        },
+        {
+          "productId": 60,
+          "qty": 50
+        }
+      ]
+    },
+    {
+      "producedId": 32,
+      "producedQty": 250,
+      "consumes": [
+        {
+          "productId": 50,
+          "qty": 50
+        },
+        {
+          "productId": 60,
+          "qty": 50
+        }
+      ]
+    },
+    {
+      "producedId": 33,
+      "producedQty": 100,
+      "consumes": [
+        {
+          "productId": 46,
+          "qty": 100
+        },
+        {
+          "productId": 60,
+          "qty": 100
+        }
+      ]
+    },
+    {
+      "producedId": 34,
+      "producedQty": 100,
+      "consumes": [
+        {
+          "productId": 47,
+          "qty": 100
+        },
+        {
+          "productId": 60,
+          "qty": 100
+        }
+      ]
+    },
+    {
+      "producedId": 35,
+      "producedQty": 100,
+      "consumes": [
+        {
+          "productId": 13,
+          "qty": 20
+        },
+        {
+          "productId": 54,
+          "qty": 100
+        }
+      ]
+    },
+    {
+      "producedId": 36,
+      "producedQty": 100,
+      "consumes": [
+        {
+          "productId": 14,
+          "qty": 20
+        },
+        {
+          "productId": 54,
+          "qty": 100
+        }
+      ]
+    },
+    {
+      "producedId": 37,
+      "producedQty": 100,
+      "consumes": [
+        {
+          "productId": 15,
+          "qty": 50
+        }
+      ]
+    },
+    {
+      "producedId": 38,
+      "producedQty": 100,
+      "consumes": [
+        {
+          "productId": 22,
+          "qty": 100
+        },
+        {
+          "productId": 38,
+          "qty": 250
+        },
+        {
+          "productId": 60,
+          "qty": 100
+        }
+      ]
+    },
+    {
+      "producedId": 39,
+      "producedQty": 100,
+      "consumes": [
+        {
+          "productId": 36,
+          "qty": 2
+        },
+        {
+          "productId": 20,
+          "qty": 100
+        }
+      ]
+    },
+    {
+      "producedId": 40,
+      "producedQty": 100,
+      "consumes": [
+        {
+          "productId": 36,
+          "qty": 3
+        },
+        {
+          "productId": 19,
+          "qty": 50
+        }
+      ]
+    },
+    {
+      "producedId": 41,
+      "producedQty": 100,
+      "consumes": [
+        {
+          "productId": 36,
+          "qty": 3
+        },
+        {
+          "productId": 19,
+          "qty": 50
+        }
+      ]
+    },
+    {
+      "producedId": 42,
+      "producedQty": 500,
+      "consumes": [
+        {
+          "productId": 36,
+          "qty": 2
+        }
+      ]
+    },
+    {
+      "producedId": 43,
+      "producedQty": 100,
+      "consumes": [
+        {
+          "productId": 36,
+          "qty": 1
+        },
+        {
+          "productId": 19,
+          "qty": 20
+        }
+      ]
+    },
+    {
+      "producedId": 44,
+      "producedQty": 100,
+      "consumes": [
+        {
+          "productId": 36,
+          "qty": 5
+        },
+        {
+          "productId": 20,
+          "qty": 50
+        }
+      ]
+    },
+    {
+      "producedId": 45,
+      "producedQty": 100,
+      "consumes": [
+        {
+          "productId": 38,
+          "qty": 50
+        },
+        {
+          "productId": 32,
+          "qty": 100
+        }
+      ]
+    },
+    {
+      "producedId": 46,
+      "producedQty": 100,
+      "consumes": [
+        {
+          "productId": 36,
+          "qty": 1
+        },
+        {
+          "productId": 19,
+          "qty": 20
+        }
+      ]
+    },
+    {
+      "producedId": 47,
+      "producedQty": 60,
+      "consumes": [
+        {
+          "productId": 19,
+          "qty": 120
+        }
+      ]
+    },
+    {
+      "producedId": 48,
+      "producedQty": 60,
+      "consumes": [
+        {
+          "productId": 19,
+          "qty": 120
+        }
+      ]
+    },
+    {
+      "producedId": 49,
+      "producedQty": 30,
+      "consumes": [
+        {
+          "productId": 20,
+          "qty": 60
+        }
+      ]
+    },
+    {
+      "producedId": 50,
+      "producedQty": 30,
+      "consumes": [
+        {
+          "productId": 20,
+          "qty": 60
+        }
+      ]
+    },
+    {
+      "producedId": 51,
+      "producedQty": 60,
+      "consumes": [
+        {
+          "productId": 19,
+          "qty": 120
+        }
+      ]
+    },
+    {
+      "producedId": 52,
+      "producedQty": 60,
+      "consumes": [
+        {
+          "productId": 19,
+          "qty": 120
+        }
+      ]
+    },
+    {
+      "producedId": 53,
+      "producedQty": 30,
+      "consumes": [
+        {
+          "productId": 20,
+          "qty": 60
+        }
+      ]
+    },
+    {
+      "producedId": 54,
+      "producedQty": 30,
+      "consumes": [
+        {
+          "productId": 20,
+          "qty": 60
+        }
+      ]
+    },
+    {
+      "producedId": 55,
+      "producedQty": 60,
+      "consumes": [
+        {
+          "productId": 56,
+          "qty": 60
+        },
+        {
+          "productId": 31,
+          "qty": 60
+        }
+      ]
+    },
+    {
+      "producedId": 56,
+      "producedQty": 30,
+      "consumes": [
+        {
+          "productId": 57,
+          "qty": 30
+        },
+        {
+          "productId": 31,
+          "qty": 30
+        }
+      ]
+    },
+    {
+      "producedId": 57,
+      "producedQty": 30,
+      "consumes": [
+        {
+          "productId": 5,
+          "qty": 30
+        },
+        {
+          "productId": 9,
+          "qty": 300
+        },
+        {
+          "productId": 17,
+          "qty": 30
+        },
+        {
+          "productId": 22,
+          "qty": 30
+        },
+        {
+          "productId": 28,
+          "qty": 60
+        },
+        {
+          "productId": 33,
+          "qty": 30
+        },
+        {
+          "productId": 38,
+          "qty": 30
+        },
+        {
+          "productId": 41,
+          "qty": 300
+        },
+        {
+          "productId": 51,
+          "qty": 30
+        },
+        {
+          "productId": 55,
+          "qty": 300
+        }
+      ]
+    },
+    {
+      "producedId": 58,
+      "producedQty": 30,
+      "consumes": [
+        {
+          "productId": 5,
+          "qty": 30
+        },
+        {
+          "productId": 9,
+          "qty": 60
+        },
+        {
+          "productId": 17,
+          "qty": 30
+        },
+        {
+          "productId": 22,
+          "qty": 5
+        },
+        {
+          "productId": 28,
+          "qty": 30
+        },
+        {
+          "productId": 33,
+          "qty": 30
+        },
+        {
+          "productId": 38,
+          "qty": 5
+        },
+        {
+          "productId": 41,
+          "qty": 60
+        },
+        {
+          "productId": 51,
+          "qty": 30
+        },
+        {
+          "productId": 55,
+          "qty": 60
+        }
+      ]
+    },
+    {
+      "producedId": 59,
+      "producedQty": 60,
+      "consumes": [
+        {
+          "productId": 9,
+          "qty": 60
+        },
+        {
+          "productId": 17,
+          "qty": 10
+        },
+        {
+          "productId": 28,
+          "qty": 60
+        },
+        {
+          "productId": 33,
+          "qty": 60
+        },
+        {
+          "productId": 38,
+          "qty": 10
+        },
+        {
+          "productId": 41,
+          "qty": 60
+        },
+        {
+          "productId": 51,
+          "qty": 120
+        },
+        {
+          "productId": 55,
+          "qty": 60
+        }
+      ]
+    },
+    {
+      "producedId": 60,
+      "producedQty": 60,
+      "consumes": [
+        {
+          "productId": 9,
+          "qty": 120
+        },
+        {
+          "productId": 17,
+          "qty": 20
+        },
+        {
+          "productId": 28,
+          "qty": 60
+        },
+        {
+          "productId": 33,
+          "qty": 60
+        },
+        {
+          "productId": 38,
+          "qty": 20
+        },
+        {
+          "productId": 41,
+          "qty": 120
+        },
+        {
+          "productId": 51,
+          "qty": 120
+        },
+        {
+          "productId": 55,
+          "qty": 120
+        }
+      ]
+    },
+    {
+      "producedId": 61,
+      "producedQty": 30,
+      "consumes": [
+        {
+          "productId": 5,
+          "qty": 30
+        },
+        {
+          "productId": 9,
+          "qty": 300
+        },
+        {
+          "productId": 17,
+          "qty": 30
+        },
+        {
+          "productId": 22,
+          "qty": 30
+        },
+        {
+          "productId": 28,
+          "qty": 60
+        },
+        {
+          "productId": 33,
+          "qty": 30
+        },
+        {
+          "productId": 38,
+          "qty": 30
+        },
+        {
+          "productId": 41,
+          "qty": 300
+        },
+        {
+          "productId": 51,
+          "qty": 30
+        },
+        {
+          "productId": 55,
+          "qty": 300
+        }
+      ]
+    },
+    {
+      "producedId": 62,
+      "producedQty": 30,
+      "consumes": [
+        {
+          "productId": 5,
+          "qty": 30
+        },
+        {
+          "productId": 9,
+          "qty": 60
+        },
+        {
+          "productId": 17,
+          "qty": 30
+        },
+        {
+          "productId": 22,
+          "qty": 5
+        },
+        {
+          "productId": 28,
+          "qty": 30
+        },
+        {
+          "productId": 33,
+          "qty": 30
+        },
+        {
+          "productId": 38,
+          "qty": 5
+        },
+        {
+          "productId": 41,
+          "qty": 60
+        },
+        {
+          "productId": 51,
+          "qty": 30
+        },
+        {
+          "productId": 55,
+          "qty": 60
+        }
+      ]
+    }
+  ]
+}
